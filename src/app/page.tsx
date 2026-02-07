@@ -198,15 +198,15 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>, conversionType: string = "form_submit") => {
     e.preventDefault();
-    trackConversion("form_submit");
+    trackConversion(conversionType);
     setFormSubmitted(true);
-  }
+  };
 
-  function handleWhatsAppClick() {
+  const handleWhatsAppClick = () => {
     trackConversion("whatsapp_click");
-  }
+  };
 
   return (
     <>
@@ -363,7 +363,7 @@ export default function Home() {
                 <div className="glass-card p-8 rounded-[24px] relative">
                   <h3 className="text-xl font-bold font-display mb-1">Get Your Free Consultation</h3>
                   <p className="text-muted-foreground text-sm mb-6">Fill in your details and we&apos;ll get back to you</p>
-                  <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); trackConversion("hero_form"); setFormSubmitted(true); }}>
+                  <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero_form")}>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <input type="text" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
                         <input type="tel" placeholder="Phone Number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
@@ -697,7 +697,7 @@ export default function Home() {
           <div className="max-w-lg mx-auto" data-reveal>
             <div className="glass-card p-8 rounded-[20px]">
               {!formSubmitted ? (
-                <form onSubmit={handleFormSubmit} className="space-y-5">
+                <form onSubmit={(e) => handleFormSubmit(e, "form_submit")} className="space-y-5">
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Name <span className="text-red-500">*</span></label>
                     <input type="text" placeholder="Your full name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
@@ -746,8 +746,8 @@ export default function Home() {
             </div>
             <p className="text-center text-muted-foreground mt-6 text-sm" data-reveal>
               Or call us directly:{" "}
-                <a href={`tel:${PHONE_DISPLAY.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
-                {PHONE_DISPLAY}
+                <a href={`tel:${CONTACT_DISPLAY.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
+                {CONTACT_DISPLAY}
               </a>
             </p>
           </div>
@@ -839,7 +839,7 @@ export default function Home() {
                   </div>
                   <div className="flex items-center gap-3 text-sm text-white/60">
                     <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`tel:${PHONE_DISPLAY.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{PHONE_DISPLAY}</a>
+                    <a href={`tel:${CONTACT_DISPLAY.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY}</a>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-white/60">
                     <ArrowUpRight className="w-4 h-4 text-white/40 flex-shrink-0" />

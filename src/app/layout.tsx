@@ -38,7 +38,7 @@ export default function RootLayout({
         />
         <ErrorReporter />
         <Script
-          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
+          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts/route-messenger.js"
           strategy="afterInteractive"
           data-target-origin="*"
           data-message-type="ROUTE_CHANGE"
