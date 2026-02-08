@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
+  // swcMinify is enabled by default in Next.js 15, no need to specify
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -37,10 +37,8 @@ const nextConfig: NextConfig = {
       }
     }
   },
-  // Performance optimizations
-  experimental: {
-    optimizeCss: true,
-  },
+  // Removed optimizeCss experimental feature as it requires critters package
+  // Performance optimizations are handled by Next.js by default
 };
 
 export default nextConfig;
