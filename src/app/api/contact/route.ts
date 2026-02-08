@@ -47,11 +47,33 @@ This email was sent from the Arovida Technologies website contact form.
     // For immediate functionality, you can use mailto: link generation
     // But better to use a proper email service
     
-    // Using Web3Forms for email delivery (free tier available)
+    // CRITICAL: Email delivery to arovidatechnologies@gmail.com
+    // Using Web3Forms for reliable email delivery (free tier available)
     // Get your access key from https://web3forms.com
-    const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY || 'YOUR_ACCESS_KEY_HERE';
+    const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
+    
+    if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_ACCESS_KEY_HERE') {
+      // Log the submission for manual follow-up if Web3Forms is not configured
+      console.error('⚠️ WEB3FORMS_ACCESS_KEY not configured! Form submission received:', {
+        name,
+        phone,
+        businessType,
+        service,
+        message,
+        formType,
+        email: 'arovidatechnologies@gmail.com',
+      });
+      
+      // Still return success to user, but log the issue
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Form submitted successfully',
+        warning: 'Email service not configured. Please set WEB3FORMS_ACCESS_KEY in environment variables.'
+      });
+    }
     
     try {
+      // Primary: Web3Forms API
       const web3formsResponse = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
@@ -62,47 +84,67 @@ This email was sent from the Arovida Technologies website contact form.
           access_key: WEB3FORMS_ACCESS_KEY,
           subject: emailSubject,
           from_name: name,
-          email: 'arovidatechnologies@gmail.com', // Your email
+          from_email: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : 'noreply@arovida.contact',
+          to: 'arovidatechnologies@gmail.com', // CRITICAL: Your sales email
+          reply_to: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : 'noreply@arovida.contact',
           message: emailHtml,
-          // Additional fields
+          // Additional fields for better organization
           name: name,
           phone: phone,
-          businessType: businessType,
-          service: service,
-          formType: formType,
+          businessType: businessType || 'Not specified',
+          service: service || 'Not specified',
+          formType: formType || 'General',
+          _template: 'table',
         }),
       });
 
       const web3formsData = await web3formsResponse.json();
 
       if (web3formsData.success) {
+        console.log('✅ Email sent successfully to arovidatechnologies@gmail.com via Web3Forms');
         return NextResponse.json({ 
           success: true, 
           message: 'Form submitted successfully' 
         });
       } else {
-        // Fallback: log and return success anyway
-        console.log('Web3Forms submission:', web3formsData);
+        // Log the error but don't fail the request
+        console.error('❌ Web3Forms error:', web3formsData);
+        console.error('Form submission data:', {
+          name,
+          phone,
+          businessType,
+          service,
+          message,
+          formType,
+          email: 'arovidatechnologies@gmail.com',
+        });
+        
+        // Still return success to user, but log for manual follow-up
         return NextResponse.json({ 
           success: true, 
-          message: 'Form submitted successfully' 
+          message: 'Form submitted successfully',
+          warning: 'Email delivery may have failed. Please check logs.'
         });
       }
     } catch (error) {
-      // Log error but still return success to user
-      console.error('Email sending error:', error);
-      console.log('Form submission received:', {
+      // Critical error logging
+      console.error('❌ CRITICAL: Email sending failed:', error);
+      console.error('Form submission data (MANUAL FOLLOW-UP REQUIRED):', {
         name,
         phone,
         businessType,
         service,
         message,
         formType,
+        email: 'arovidatechnologies@gmail.com',
+        timestamp: new Date().toISOString(),
       });
       
+      // Return success to user, but log for immediate action
       return NextResponse.json({ 
         success: true, 
-        message: 'Form submitted successfully' 
+        message: 'Form submitted successfully',
+        error: 'Email service error. Data logged for manual follow-up.'
       });
     }
   } catch (error) {

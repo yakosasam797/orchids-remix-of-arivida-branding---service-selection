@@ -87,16 +87,25 @@ const portfolio = [
     type: "Interior Design Firm",
     result: "50% increase in inquiries",
     color: "from-[#7d41ff] to-[#3b82f6]",
+    url: "https://www.novastylesinterior.com/",
+    thumbnail: "https://www.novastylesinterior.com/",
+    description: "Professional website for interior and construction company",
   },
   {
-    type: "Construction Company",
+    type: "Industrial Printing Machinery",
     result: "Ranked #1 on Google",
     color: "from-[#ff9c22] to-[#e74c3c]",
+    url: "https://www.premiermachineries.com/",
+    thumbnail: "https://www.premiermachineries.com/",
+    description: "Industrial level printing machine dealer website - Mangalore",
   },
   {
-    type: "Architecture Studio",
+    type: "Immigration Services",
     result: "Modern portfolio showcase",
     color: "from-[#3b82f6] to-[#7d41ff]",
+    url: "https://www.xiphiasimmigration.com/",
+    thumbnail: "https://www.xiphiasimmigration.com/",
+    description: "Professional immigration consultancy website - Dubai",
   },
 ];
 
@@ -714,20 +723,59 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {portfolio.map((item, i) => (
-              <div key={i} className="group bg-white rounded-xl border border-border overflow-hidden hover:border-foreground/20 transition-all duration-300 hover:shadow-lg" data-reveal>
-                <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center relative`}>
-                  <div className="w-20 h-14 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                    <div className="w-14 h-2 bg-white/30 rounded-full" />
+              <a 
+                key={i} 
+                href={item.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group bg-white rounded-xl border border-border overflow-hidden hover:border-foreground/20 transition-all duration-300 hover:shadow-lg block" 
+                data-reveal
+              >
+                <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center relative overflow-hidden`}>
+                  {/* Website Thumbnail using screenshot service */}
+                  <img 
+                    src={`https://image.thum.io/get/width/800/crop/600/${item.url}`}
+                    alt={`${item.type} website preview`}
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                    loading="lazy"
+                    onError={(e) => {
+                      // Fallback: hide image and show gradient
+                      const target = e.currentTarget as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                  {/* Gradient overlay for better text readability */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-30 group-hover:opacity-20 transition-opacity pointer-events-none`} />
+                  {/* Website browser mockup overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-24 h-16 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10 flex flex-col items-center justify-center p-2">
+                      <div className="w-full flex gap-1 mb-2">
+                        <div className="w-2 h-2 rounded-full bg-white/20" />
+                        <div className="w-2 h-2 rounded-full bg-white/20" />
+                        <div className="w-2 h-2 rounded-full bg-white/20" />
+                      </div>
+                      <div className="w-16 h-1 bg-white/20 rounded-full" />
+                    </div>
                   </div>
-                  <div className="absolute top-3 right-3 bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-semibold flex items-center gap-1">
+                  {/* Result badge */}
+                  <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 z-10">
                     <TrendingUp className="w-3 h-3" /> {item.result}
+                  </div>
+                  {/* Visit website badge */}
+                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm text-foreground text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg">
+                    Visit Website
+                    <ArrowUpRight className="w-3 h-3" />
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-display font-bold text-base mb-2">Built for {item.type}</h3>
-                  <p className="text-muted-foreground text-sm">Professional website with portfolio &amp; lead generation</p>
+                  <h3 className="font-display font-bold text-base mb-2 group-hover:text-primary transition-colors">Built for {item.type}</h3>
+                  <p className="text-muted-foreground text-sm mb-2">{item.description}</p>
+                  <span className="text-xs text-primary font-medium flex items-center gap-1">
+                    View Live Site
+                    <ArrowUpRight className="w-3 h-3" />
+                  </span>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
