@@ -198,12 +198,43 @@ const SERVICE_OPTIONS = [
     "Branding",
   ];
 
+// Phone number validation function
+function validatePhoneNumber(phone: string): { valid: boolean; error?: string } {
+  // Remove all non-digit characters
+  const digitsOnly = phone.replace(/\D/g, '');
+  
+  // Check if it's exactly 10 digits (Indian phone number)
+  if (digitsOnly.length === 10) {
+    // Check if it starts with 6, 7, 8, or 9 (valid Indian mobile number prefixes)
+    if (/^[6-9]/.test(digitsOnly)) {
+      return { valid: true };
+    } else {
+      return { valid: false, error: 'Phone number must start with 6, 7, 8, or 9' };
+    }
+  } else if (digitsOnly.length === 11 && digitsOnly.startsWith('0')) {
+    // Handle numbers starting with 0 (like 0XXXXXXXXXX)
+    const withoutZero = digitsOnly.substring(1);
+    if (/^[6-9]/.test(withoutZero)) {
+      return { valid: true };
+    }
+  } else if (digitsOnly.length === 12 && digitsOnly.startsWith('91')) {
+    // Handle numbers with country code 91
+    const withoutCountryCode = digitsOnly.substring(2);
+    if (withoutCountryCode.length === 10 && /^[6-9]/.test(withoutCountryCode)) {
+      return { valid: true };
+    }
+  }
+  
+  return { valid: false, error: 'Please enter a valid 10-digit Indian phone number' };
+}
+
 export default function Home() {
   const [heroFormSubmitted, setHeroFormSubmitted] = useState(false);
   const [footerFormSubmitted, setFooterFormSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phoneError, setPhoneError] = useState<{ hero?: string; footer?: string }>({});
   useReveal();
 
   useEffect(() => {
@@ -214,9 +245,7 @@ export default function Home() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: "hero" | "footer", conversionType: string = "form_submit") => {
     e.preventDefault();
-    setIsSubmitting(true);
-    trackConversion(conversionType);
-
+    
     const form = e.currentTarget;
     const formData = new FormData(form);
     const name = formData.get("name") as string || (form.querySelector('input[type="text"]') as HTMLInputElement)?.value || "";
@@ -224,6 +253,24 @@ export default function Home() {
     const businessType = formData.get("businessType") as string || (form.querySelector('select') as HTMLSelectElement)?.value || "";
     const service = formData.get("service") as string || (form.querySelectorAll('select')[1] as HTMLSelectElement)?.value || "";
     const message = formData.get("message") as string || (form.querySelector('textarea') as HTMLTextAreaElement)?.value || "";
+
+    // Validate phone number
+    const phoneValidation = validatePhoneNumber(phone);
+    if (!phoneValidation.valid) {
+      setPhoneError({ [formType]: phoneValidation.error });
+      // Focus on phone input
+      const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
+      if (phoneInput) {
+        phoneInput.focus();
+        phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    // Clear any previous errors
+    setPhoneError({ [formType]: undefined });
+    setIsSubmitting(true);
+    trackConversion(conversionType);
 
     try {
       const response = await fetch("/api/contact", {
@@ -505,7 +552,36 @@ export default function Home() {
                       <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero", "hero_form")}>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
-                            <input type="tel" name="phone" placeholder="Phone Number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                            <div>
+                              <input 
+                                type="tel" 
+                                name="phone" 
+                                placeholder="Phone (10 digits)" 
+                                required 
+                                maxLength={10}
+                                pattern="[6-9][0-9]{9}"
+                                className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${
+                                  phoneError.hero ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
+                                }`}
+                                onChange={(e) => {
+                                  // Only allow digits
+                                  const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                  e.target.value = value;
+                                  // Clear error when user starts typing
+                                  if (phoneError.hero) {
+                                    setPhoneError({ hero: undefined });
+                                  }
+                                }}
+                              />
+                              {phoneError.hero && (
+                                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                                  <span>⚠</span> {phoneError.hero}
+                                </p>
+                              )}
+                              {!phoneError.hero && (
+                                <p className="text-muted-foreground text-xs mt-1">10-digit mobile number</p>
+                              )}
+                            </div>
                           </div>
                           <div>
                             <select name="businessType" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
@@ -902,7 +978,34 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Phone <span className="text-red-500">*</span></label>
-                    <input type="tel" name="phone" placeholder="Your phone number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                    <div>
+                      <input 
+                        type="tel" 
+                        name="phone" 
+                        placeholder="Your phone number (10 digits)" 
+                        required 
+                        maxLength={10}
+                        pattern="[6-9][0-9]{9}"
+                        className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${
+                          phoneError.footer ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
+                        }`}
+                        onChange={(e) => {
+                          // Only allow digits
+                          const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          e.target.value = value;
+                          // Clear error when user starts typing
+                          if (phoneError.footer) {
+                                setPhoneError({ footer: undefined });
+                              }
+                        }}
+                      />
+                      {phoneError.footer && (
+                        <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                          <span>⚠</span> {phoneError.footer}
+                        </p>
+                      )}
+                      <p className="text-muted-foreground text-xs mt-1">Enter 10-digit Indian mobile number</p>
+                    </div>
                   </div>
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Business Type</label>

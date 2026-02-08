@@ -48,88 +48,91 @@ This email was sent from the Arovida Technologies website contact form.
     // But better to use a proper email service
     
     // CRITICAL: Email delivery to arovidatechnologies@gmail.com
-    // Using Web3Forms for reliable email delivery (free tier available)
-    // Get your access key from https://web3forms.com
-    const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
+    // Try multiple email services for reliability
     
-    if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_ACCESS_KEY_HERE') {
-      // Log the submission for manual follow-up if Web3Forms is not configured
-      console.error('⚠️ WEB3FORMS_ACCESS_KEY not configured! Form submission received:', {
-        name,
-        phone,
-        businessType,
-        service,
-        message,
-        formType,
-        email: 'arovidatechnologies@gmail.com',
-      });
-      
-      // Still return success to user, but log the issue
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Form submitted successfully',
-        warning: 'Email service not configured. Please set WEB3FORMS_ACCESS_KEY in environment variables.'
-      });
+    const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    
+    let emailSent = false;
+    let lastError: any = null;
+    
+    // Method 1: Try Resend API (most reliable)
+    if (RESEND_API_KEY) {
+      try {
+        const resendResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: 'Arovida Website <noreply@arovidatechnologies.com>',
+            to: ['arovidatechnologies@gmail.com'],
+            subject: emailSubject,
+            html: emailHtml,
+            reply_to: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : undefined,
+          }),
+        });
+
+        const resendData = await resendResponse.json();
+        
+        if (resendResponse.ok && resendData.id) {
+          console.log('✅ Email sent successfully to arovidatechnologies@gmail.com via Resend');
+          emailSent = true;
+        } else {
+          console.error('❌ Resend error:', resendData);
+          lastError = resendData;
+        }
+      } catch (error) {
+        console.error('❌ Resend API error:', error);
+        lastError = error;
+      }
     }
     
-    try {
-      // Primary: Web3Forms API
-      const web3formsResponse = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: emailSubject,
-          from_name: name,
-          from_email: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : 'noreply@arovida.contact',
-          to: 'arovidatechnologies@gmail.com', // CRITICAL: Your sales email
-          reply_to: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : 'noreply@arovida.contact',
-          message: emailHtml,
-          // Additional fields for better organization
-          name: name,
-          phone: phone,
-          businessType: businessType || 'Not specified',
-          service: service || 'Not specified',
-          formType: formType || 'General',
-          _template: 'table',
-        }),
-      });
+    // Method 2: Fallback to Web3Forms
+    if (!emailSent && WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY !== 'YOUR_ACCESS_KEY_HERE') {
+      try {
+        const web3formsResponse = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: emailSubject,
+            from_name: name,
+            from_email: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : 'noreply@arovida.contact',
+            to: 'arovidatechnologies@gmail.com',
+            reply_to: phone ? `phone-${phone.replace(/\D/g, '')}@arovida.contact` : 'noreply@arovida.contact',
+            message: emailHtml,
+            name: name,
+            phone: phone,
+            businessType: businessType || 'Not specified',
+            service: service || 'Not specified',
+            formType: formType || 'General',
+            _template: 'table',
+          }),
+        });
 
-      const web3formsData = await web3formsResponse.json();
+        const web3formsData = await web3formsResponse.json();
 
-      if (web3formsData.success) {
-        console.log('✅ Email sent successfully to arovidatechnologies@gmail.com via Web3Forms');
-        return NextResponse.json({ 
-          success: true, 
-          message: 'Form submitted successfully' 
-        });
-      } else {
-        // Log the error but don't fail the request
-        console.error('❌ Web3Forms error:', web3formsData);
-        console.error('Form submission data:', {
-          name,
-          phone,
-          businessType,
-          service,
-          message,
-          formType,
-          email: 'arovidatechnologies@gmail.com',
-        });
-        
-        // Still return success to user, but log for manual follow-up
-        return NextResponse.json({ 
-          success: true, 
-          message: 'Form submitted successfully',
-          warning: 'Email delivery may have failed. Please check logs.'
-        });
+        if (web3formsData.success) {
+          console.log('✅ Email sent successfully to arovidatechnologies@gmail.com via Web3Forms');
+          emailSent = true;
+        } else {
+          console.error('❌ Web3Forms error:', web3formsData);
+          lastError = web3formsData;
+        }
+      } catch (error) {
+        console.error('❌ Web3Forms API error:', error);
+        lastError = error;
       }
-    } catch (error) {
-      // Critical error logging
-      console.error('❌ CRITICAL: Email sending failed:', error);
-      console.error('Form submission data (MANUAL FOLLOW-UP REQUIRED):', {
+    }
+    
+    // If no email service is configured or all failed, log for manual follow-up
+    if (!emailSent) {
+      console.error('⚠️ CRITICAL: No email sent! Form submission data:', {
         name,
         phone,
         businessType,
@@ -138,15 +141,20 @@ This email was sent from the Arovida Technologies website contact form.
         formType,
         email: 'arovidatechnologies@gmail.com',
         timestamp: new Date().toISOString(),
+        error: lastError,
       });
       
-      // Return success to user, but log for immediate action
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Form submitted successfully',
-        error: 'Email service error. Data logged for manual follow-up.'
-      });
+      // Log to console for immediate visibility
+      console.error('📧 MANUAL ACTION REQUIRED: Send email to arovidatechnologies@gmail.com with above data');
     }
+    
+    // Always return success to user (don't break their experience)
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Form submitted successfully',
+      emailSent: emailSent,
+      ...(emailSent ? {} : { warning: 'Email delivery may have failed. Data logged for manual follow-up.' })
+    });
   } catch (error) {
     console.error('Error processing form:', error);
     return NextResponse.json(
