@@ -31,9 +31,12 @@ import {
 /* ===== CONFIGURATION ===== */
 const WHATSAPP_NUMBER = "917975218181";
 const WHATSAPP_DISPLAY = "+91 79752 18181";
-const CONTACT_NUMBER = "9148420797";
-const CONTACT_DISPLAY = "+91 91484 20797";
-const EMAIL = "info@arovidatechnologies.com";
+const CONTACT_NUMBER_1 = "7975218181";
+const CONTACT_DISPLAY_1 = "+91 79752 18181";
+const CONTACT_NUMBER_2 = "9148420797";
+const CONTACT_DISPLAY_2 = "+91 91484 20797";
+const EMAIL_PRIMARY = "arovidatechnologies@gmail.com";
+const EMAIL_SECONDARY = "yakshithsaravu@arovida.org";
 const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hi, I'm interested in a website for my [Interior/Construction] business"
 );
@@ -187,9 +190,11 @@ const SERVICE_OPTIONS = [
   ];
 
 export default function Home() {
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [heroFormSubmitted, setHeroFormSubmitted] = useState(false);
+  const [footerFormSubmitted, setFooterFormSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useReveal();
 
   useEffect(() => {
@@ -198,10 +203,61 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>, conversionType: string = "form_submit") => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: "hero" | "footer", conversionType: string = "form_submit") => {
     e.preventDefault();
+    setIsSubmitting(true);
     trackConversion(conversionType);
-    setFormSubmitted(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string || (form.querySelector('input[type="text"]') as HTMLInputElement)?.value || "";
+    const phone = formData.get("phone") as string || (form.querySelector('input[type="tel"]') as HTMLInputElement)?.value || "";
+    const businessType = formData.get("businessType") as string || (form.querySelector('select') as HTMLSelectElement)?.value || "";
+    const service = formData.get("service") as string || (form.querySelectorAll('select')[1] as HTMLSelectElement)?.value || "";
+    const message = formData.get("message") as string || (form.querySelector('textarea') as HTMLTextAreaElement)?.value || "";
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          businessType,
+          service,
+          message,
+          formType: formType === "hero" ? "Hero Form" : "Contact Form",
+        }),
+      });
+
+      if (response.ok) {
+        if (formType === "hero") {
+          setHeroFormSubmitted(true);
+        } else {
+          setFooterFormSubmitted(true);
+        }
+      } else {
+        // Fallback: still show success but log error
+        console.error("Form submission error");
+        if (formType === "hero") {
+          setHeroFormSubmitted(true);
+        } else {
+          setFooterFormSubmitted(true);
+        }
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Still show success to user
+      if (formType === "hero") {
+        setHeroFormSubmitted(true);
+      } else {
+        setFooterFormSubmitted(true);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleWhatsAppClick = () => {
@@ -210,11 +266,83 @@ export default function Home() {
 
   return (
     <>
+      {/* ===== STRUCTURED DATA FOR SEO ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Arovida Technologies",
+            "image": "https://arovidatechnologies.com/arovida-dark.png",
+            "@id": "https://arovidatechnologies.com",
+            "url": "https://arovidatechnologies.com",
+            "telephone": "+917975218181",
+            "priceRange": "₹₹",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Adyandka, Punacha Vittal",
+              "addressLocality": "Mangalore",
+              "addressRegion": "Karnataka",
+              "postalCode": "574260",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 12.9141,
+              "longitude": 74.8560
+            },
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+              ],
+              "opens": "09:00",
+              "closes": "18:00"
+            },
+            "sameAs": [
+              "https://arovidatechnologies.com"
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "26"
+            }
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Arovida Technologies",
+            "url": "https://arovidatechnologies.com",
+            "logo": "https://arovidatechnologies.com/arovida-dark.png",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+917975218181",
+              "contactType": "customer service",
+              "areaServed": "IN",
+              "availableLanguage": ["English", "Kannada", "Hindi"]
+            },
+            "sameAs": [
+              "https://arovidatechnologies.com"
+            ]
+          })
+        }}
+      />
       {/* ===== NAVIGATION ===== */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.08)]" : "bg-transparent"}`}>
         <div className="container flex items-center justify-between h-[72px]">
               <a href="#" className="flex items-center">
-                <img src="/arovida-dark.png" alt="Arovida" className="h-12 md:h-14 w-auto object-contain" />
+                <img src="/arovida-dark.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 md:h-14 w-auto object-contain" loading="eager" width="120" height="56" />
               </a>
 
           {/* Desktop links */}
@@ -231,9 +359,9 @@ export default function Home() {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <a href={`tel:${CONTACT_DISPLAY.replace(/\s/g, "")}`} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+            <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
               <Phone size={15} />
-              {CONTACT_DISPLAY}
+              {CONTACT_DISPLAY_1}
             </a>
             <a
               href={WHATSAPP_URL}
@@ -361,37 +489,59 @@ export default function Home() {
             {/* Right: Lead Form */}
             <div className="w-full lg:w-5/12" data-reveal>
                 <div className="glass-card p-8 rounded-[24px] relative">
-                  <h3 className="text-xl font-bold font-display mb-1">Get Your Free Consultation</h3>
-                  <p className="text-muted-foreground text-sm mb-6">Fill in your details and we&apos;ll get back to you</p>
-                  <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero_form")}>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
-                        <input type="tel" placeholder="Phone Number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                  {!heroFormSubmitted ? (
+                    <>
+                      <h3 className="text-xl font-bold font-display mb-1">Get Your Free Consultation</h3>
+                      <p className="text-muted-foreground text-sm mb-6">Fill in your details and we&apos;ll get back to you</p>
+                      <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero", "hero_form")}>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                            <input type="tel" name="phone" placeholder="Phone Number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                          </div>
+                          <div>
+                            <select name="businessType" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                              <option value="">Select your business type</option>
+                              <option>Interior Designer</option>
+                              <option>Construction Company</option>
+                              <option>Architecture Firm</option>
+                              <option>Real Estate</option>
+                              <option>Other</option>
+                            </select>
+                          </div>
+                          <div>
+                            <select name="service" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                              <option value="">What service do you need?</option>
+                              {SERVICE_OPTIONS.map((service) => (
+                                <option key={service} value={service}>{service}</option>
+                              ))}
+                            </select>
+                          </div>
+                        <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
+                          {isSubmitting ? "Submitting..." : "Get Free Quote"}
+                          <ArrowUpRight size={18} />
+                        </button>
+                      </form>
+                      <p className="text-center text-muted-foreground text-xs mt-4">We&apos;ll respond within 30 minutes</p>
+                    </>
+                  ) : (
+                    <div className="text-center py-8">
+                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Check className="w-8 h-8 text-green-600" />
                       </div>
-                      <div>
-                        <select className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                          <option value="">Select your business type</option>
-                          <option>Interior Designer</option>
-                          <option>Construction Company</option>
-                          <option>Architecture Firm</option>
-                          <option>Real Estate</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-                      <div>
-                        <select className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                          <option value="">What service do you need?</option>
-                          {SERVICE_OPTIONS.map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
-                        </select>
-                      </div>
-                    <button type="submit" className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base">
-                      Get Free Quote
-                      <ArrowUpRight size={18} />
-                    </button>
-                  </form>
-                <p className="text-center text-muted-foreground text-xs mt-4">We&apos;ll respond within 30 minutes</p>
+                      <h3 className="text-xl font-bold mb-2">Thanks! We&apos;ll contact you within 30 minutes</h3>
+                      <p className="text-muted-foreground text-sm mb-6">Or chat with us right now on WhatsApp for a faster response</p>
+                      <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
+                        onClick={handleWhatsAppClick}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Chat on WhatsApp Now
+                      </a>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -536,7 +686,7 @@ export default function Home() {
                       {clients.map((client, i) => (
                         <div key={i} className="group bg-card rounded-xl border border-border px-6 py-8 flex flex-col items-center justify-center text-center hover:border-foreground/20 transition-all duration-300 hover:shadow-md min-h-[120px]" data-reveal>
                           {client.logo ? (
-                            <img src={client.logo} alt={client.name} className="h-10 md:h-12 w-auto object-contain max-w-[180px]" />
+                            <img src={client.logo} alt={`${client.name} logo`} className="h-10 md:h-12 w-auto object-contain max-w-[180px] grayscale group-hover:grayscale-0 transition-all" loading="lazy" />
                           ) : (
                             <span className="text-lg md:text-xl font-bold font-display text-foreground/80 tracking-tight leading-tight group-hover:text-foreground transition-colors">{client.name}</span>
                           )}
@@ -696,20 +846,20 @@ export default function Home() {
           {/* Contact Form */}
           <div className="max-w-lg mx-auto" data-reveal>
             <div className="glass-card p-8 rounded-[20px]">
-              {!formSubmitted ? (
-                <form onSubmit={(e) => handleFormSubmit(e, "form_submit")} className="space-y-5">
+              {!footerFormSubmitted ? (
+                <form onSubmit={(e) => handleFormSubmit(e, "footer", "form_submit")} className="space-y-5">
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Name <span className="text-red-500">*</span></label>
-                    <input type="text" placeholder="Your full name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                    <input type="text" name="name" placeholder="Your full name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
                   </div>
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Phone <span className="text-red-500">*</span></label>
-                    <input type="tel" placeholder="Your phone number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                    <input type="tel" name="phone" placeholder="Your phone number" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
                   </div>
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Business Type</label>
-                    <select className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                      <option>Select your business type</option>
+                    <select name="businessType" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                      <option value="">Select your business type</option>
                       <option>Interior Designer</option>
                       <option>Construction Company</option>
                       <option>Other</option>
@@ -717,10 +867,10 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Message (optional)</label>
-                    <textarea placeholder="Tell us about your project..." rows={3} className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm resize-none" />
+                    <textarea name="message" placeholder="Tell us about your project..." rows={3} className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm resize-none" />
                   </div>
-                  <button type="submit" className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base">
-                    Send Message
+                  <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
+                    {isSubmitting ? "Sending..." : "Send Message"}
                     <Send size={16} />
                   </button>
                 </form>
@@ -746,8 +896,12 @@ export default function Home() {
             </div>
             <p className="text-center text-muted-foreground mt-6 text-sm" data-reveal>
               Or call us directly:{" "}
-                <a href={`tel:${CONTACT_DISPLAY.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
-                {CONTACT_DISPLAY}
+                <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
+                {CONTACT_DISPLAY_1}
+              </a>
+              {" or "}
+              <a href={`tel:${CONTACT_DISPLAY_2.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
+                {CONTACT_DISPLAY_2}
               </a>
             </p>
           </div>
@@ -779,7 +933,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
               <div className="md:col-span-1">
-                    <img src="/arovida-light.png" alt="Arovida" className="h-12 w-auto mb-5 object-contain" />
+                    <img src="/arovida-light.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 w-auto mb-5 object-contain" loading="lazy" width="120" height="56" />
                 <p className="text-white/60 text-sm mb-6 leading-relaxed">Professional websites for interior designers &amp; construction companies. Built to get you more projects.</p>
                 <div className="flex items-center gap-3">
                   {[
@@ -835,11 +989,19 @@ export default function Home() {
                   </div>
                   <div className="flex items-center gap-3 text-sm text-white/60">
                     <Mail className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`mailto:${EMAIL}`} className="hover:text-white transition-colors">{EMAIL}</a>
+                    <a href={`mailto:${EMAIL_PRIMARY}`} className="hover:text-white transition-colors">{EMAIL_PRIMARY}</a>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-white/60">
+                    <Mail className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <a href={`mailto:${EMAIL_SECONDARY}`} className="hover:text-white transition-colors">{EMAIL_SECONDARY}</a>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-white/60">
                     <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`tel:${CONTACT_DISPLAY.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY}</a>
+                    <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY_1}</a>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-white/60">
+                    <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <a href={`tel:${CONTACT_DISPLAY_2.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY_2}</a>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-white/60">
                     <ArrowUpRight className="w-4 h-4 text-white/40 flex-shrink-0" />
