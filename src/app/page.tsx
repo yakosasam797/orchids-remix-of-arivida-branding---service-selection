@@ -41,6 +41,8 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hi, I'm interested in a website for my [Interior/Construction] business"
 );
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+// Optional fallback: client-side Web3Forms (requires NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY)
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
 function trackConversion(type: string) {
   if (typeof window !== "undefined" && (window as any).gtag) {
@@ -274,6 +276,11 @@ export default function Home() {
     setIsSubmitting(true);
     trackConversion(conversionType);
 
+    const emailSubject =
+      formType === "hero"
+        ? "New Contact Form Submission - Hero Form"
+        : "New Contact Form Submission - Contact Form";
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -301,13 +308,59 @@ export default function Home() {
         }
         setFormError((prev) => ({ ...prev, [formType]: undefined }));
       } else {
-        const errorMessage =
+        const baseErrorMessage =
           data?.message ||
           data?.error ||
           "Something went wrong while submitting the form. Please try again.";
 
         console.error("Form submission error", { status: response.status, data });
-        setFormError((prev) => ({ ...prev, [formType]: errorMessage }));
+
+        // Optional client-side fallback to Web3Forms if configured
+        if (WEB3FORMS_ACCESS_KEY) {
+          try {
+            const web3Response = await fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                access_key: WEB3FORMS_ACCESS_KEY,
+                subject: emailSubject,
+                name,
+                phone,
+                businessType,
+                service,
+                message,
+                formType: formType === "hero" ? "Hero Form" : "Contact Form",
+              }),
+            });
+
+            const web3Data: { success?: boolean; message?: string } | null = await web3Response
+              .json()
+              .catch(() => null);
+
+            if (web3Response.ok && web3Data?.success) {
+              console.log("✅ Fallback email sent via Web3Forms", { formType, web3Data });
+              if (formType === "hero") {
+                setHeroFormSubmitted(true);
+              } else {
+                setFooterFormSubmitted(true);
+              }
+              setFormError((prev) => ({ ...prev, [formType]: undefined }));
+              return;
+            } else {
+              console.error("❌ Web3Forms fallback error", {
+                status: web3Response.status,
+                web3Data,
+              });
+            }
+          } catch (web3Error) {
+            console.error("❌ Error submitting to Web3Forms fallback:", web3Error);
+          }
+        }
+
+        setFormError((prev) => ({ ...prev, [formType]: baseErrorMessage }));
       }
     } catch (error) {
       console.error("Error submitting form:", error);

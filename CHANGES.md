@@ -9,17 +9,27 @@
 - ✅ Added proper alt text for SEO
 
 ### 2. Form Submission & Email
-- ✅ Created API route at `/api/contact/route.ts` for form submissions
+- ✅ Created API route at `/api/contact/route.ts` for form submissions (primary)
 - ✅ Separated hero form and footer form states (they now work independently)
 - ✅ Forms now send data to `arovidatechnologies@gmail.com`
 - ✅ Added loading states and proper error handling
-- ✅ Integrated Web3Forms for email delivery (free service)
+- ✅ Integrated **Resend** as the primary email provider
+- ✅ Added optional **client-side Web3Forms fallback** (free service) if Resend fails
 
-**To enable email sending:**
-1. Go to https://web3forms.com and sign up (free)
-2. Get your access key
-3. Add it to your environment variables: `WEB3FORMS_ACCESS_KEY=your_key_here`
-4. Or use Vercel environment variables if deploying there
+**To enable email sending (Resend primary):**
+1. Go to `https://resend.com` and create an account.
+2. Create an API key from the Resend dashboard.
+3. In Vercel → Project → Settings → Environment Variables, add:
+   - `RESEND_API_KEY=your_resend_api_key_here`
+4. Redeploy the project from Vercel so the new key is picked up.
+
+**Optional fallback (Web3Forms from the browser):**
+1. Go to `https://web3forms.com` and sign up (free).
+2. Get your Access Key.
+3. Add a **public** environment variable so the browser can use it:
+   - `.env.local` → `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_web3forms_access_key_here`
+   - Or set the same key in Vercel under Environment Variables.
+4. When `/api/contact` (Resend) fails, the frontend will automatically try Web3Forms as a fallback.
 
 ### 3. WhatsApp Numbers Updated
 - ✅ All WhatsApp links now point to: **+91 79752 18181** (917975218181)
@@ -59,11 +69,12 @@
 - ✅ Removed unnecessary headers
 - ✅ Added React strict mode
 
-### 7. Email Delivery (Resend)
-- ✅ Backend contact API (`src/app/api/contact/route.ts`) now uses **Resend** as the primary email service
+### 7. Email Delivery (Resend + Web3Forms Fallback)
+- ✅ Backend contact API (`src/app/api/contact/route.ts`) uses **Resend** as the primary email service
 - ✅ All form submissions (hero form and footer contact form) send emails to **arovidatechnologies@gmail.com**
 - ✅ API returns clear JSON: `{ success, message, error? }` so the frontend can react properly
 - ✅ If `RESEND_API_KEY` is missing or Resend returns an error, the API responds with `success: false` and a helpful `error` code
+- ✅ Frontend (`src/app/page.tsx`) will automatically try **Web3Forms** from the browser if a `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` is configured and the primary Resend call fails
 
 ### 8. Frontend Form Handling & Validation
 - ✅ Frontend (`src/app/page.tsx`) now:
@@ -97,10 +108,11 @@
 Create a `.env.local` file in the root directory:
 
 ```env
-WEB3FORMS_ACCESS_KEY=your_web3forms_access_key_here
+RESEND_API_KEY=your_resend_api_key_here
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_web3forms_access_key_here # optional fallback
 ```
 
-### To Get Web3Forms Access Key:
+### To Get Web3Forms Access Key (optional fallback):
 1. Visit https://web3forms.com
 2. Sign up for free
 3. Get your access key
