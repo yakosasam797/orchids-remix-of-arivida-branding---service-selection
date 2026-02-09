@@ -190,21 +190,21 @@ const NAV_LINKS = [
 ];
 
 const SERVICE_OPTIONS = [
-    "Website Design",
-    "Logo Design",
-    "Digital Marketing",
-    "Social Media Management",
-    "Custom Software",
-    "SEO",
-    "E-Commerce",
-    "Branding",
-  ];
+  "Website Design",
+  "Logo Design",
+  "Digital Marketing",
+  "Social Media Management",
+  "Custom Software",
+  "SEO",
+  "E-Commerce",
+  "Branding",
+];
 
 // Phone number validation function
 function validatePhoneNumber(phone: string): { valid: boolean; error?: string } {
   // Remove all non-digit characters
   const digitsOnly = phone.replace(/\D/g, '');
-  
+
   // Check if it's exactly 10 digits (Indian phone number)
   if (digitsOnly.length === 10) {
     // Check if it starts with 6, 7, 8, or 9 (valid Indian mobile number prefixes)
@@ -226,7 +226,7 @@ function validatePhoneNumber(phone: string): { valid: boolean; error?: string } 
       return { valid: true };
     }
   }
-  
+
   return { valid: false, error: 'Please enter a valid 10-digit Indian phone number' };
 }
 
@@ -454,9 +454,9 @@ export default function Home() {
       {/* ===== NAVIGATION ===== */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.08)]" : "bg-transparent"}`}>
         <div className="container flex items-center justify-between h-[72px]">
-              <a href="#" className="flex items-center">
-                <img src="/arovida-dark.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 md:h-14 w-auto object-contain" loading="eager" width="120" height="56" />
-              </a>
+          <a href="#" className="flex items-center">
+            <img src="/arovida-dark.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 md:h-14 w-auto object-contain" loading="eager" width="120" height="56" />
+          </a>
 
           {/* Desktop links */}
           <div className="hidden lg:flex items-center gap-8">
@@ -539,11 +539,11 @@ export default function Home() {
               {/* Ribbons */}
               <div className="flex items-center -space-x-3 mb-6" data-reveal>
                 <span className="bg-primary text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[-2deg] z-10 shadow-lg">
-                    Interior Designers
-                  </span>
-                    <span className="bg-primary/80 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[2deg] shadow-lg">
-                    & Construction Companies
-                  </span>
+                  Interior Designers
+                </span>
+                <span className="bg-primary/80 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[2deg] shadow-lg">
+                  & Construction Companies
+                </span>
               </div>
 
               {/* Badge */}
@@ -570,7 +570,7 @@ export default function Home() {
                   className="btn-pill bg-[#25D366] text-white flex items-center gap-2.5 shadow-[0_8px_24px_-6px_rgba(37,211,102,0.35)] hover:shadow-[0_12px_32px_-4px_rgba(37,211,102,0.45)] text-base"
                   onClick={handleWhatsAppClick}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
                   Get Free Consultation on WhatsApp
                 </a>
                 <a
@@ -583,110 +583,109 @@ export default function Home() {
               </div>
 
               {/* Trust badges row */}
-                <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border" data-reveal>
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    Response within 30 min
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <MapPin className="w-4 h-4 text-muted-foreground" />
-                    Based in Mangalore
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <Award className="w-4 h-4 text-muted-foreground" />
-                    5 Years Experience
-                  </div>
+              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border" data-reveal>
+                <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <Clock className="w-4 h-4 text-muted-foreground" />
+                  Response within 30 min
                 </div>
+                <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <MapPin className="w-4 h-4 text-muted-foreground" />
+                  Based in Mangalore
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                  <Award className="w-4 h-4 text-muted-foreground" />
+                  5 Years Experience
+                </div>
+              </div>
             </div>
 
             {/* Right: Lead Form */}
             <div className="w-full lg:w-5/12" data-reveal>
-                <div className="glass-card p-8 rounded-[24px] relative">
-                  {!heroFormSubmitted ? (
-                    <>
-                      <h3 className="text-xl font-bold font-display mb-1">Get Your Free Consultation</h3>
-                      <p className="text-muted-foreground text-sm mb-6">Fill in your details and we&apos;ll get back to you</p>
-                      <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero", "hero_form")}>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
-                            <div>
-                              <input 
-                                type="tel" 
-                                name="phone" 
-                                placeholder="Phone (10 digits)" 
-                                required 
-                                maxLength={10}
-                                pattern="[6-9][0-9]{9}"
-                                className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${
-                                  phoneError.hero ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
-                                }`}
-                                onChange={(e) => {
-                                  // Only allow digits
-                                  const value = e.target.value.replace(/\D/g, '').slice(0, 10);
-                                  e.target.value = value;
-                                  // Clear error when user starts typing
-                                  if (phoneError.hero) {
-                                    setPhoneError({ hero: undefined });
-                                  }
-                                }}
-                              />
-                              {phoneError.hero && (
-                                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
-                                  <span>⚠</span> {phoneError.hero}
-                                </p>
-                              )}
-                              {!phoneError.hero && (
-                                <p className="text-muted-foreground text-xs mt-1">10-digit mobile number</p>
-                              )}
-                            </div>
-                          </div>
-                          <div>
-                            <select name="businessType" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                              <option value="">Select your business type</option>
-                              <option>Interior Designer</option>
-                              <option>Construction Company</option>
-                              <option>Architecture Firm</option>
-                              <option>Real Estate</option>
-                              <option>Other</option>
-                            </select>
-                          </div>
-                          <div>
-                            <select name="service" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                              <option value="">What service do you need?</option>
-                              {SERVICE_OPTIONS.map((service) => (
-                                <option key={service} value={service}>{service}</option>
-                              ))}
-                            </select>
-                          </div>
-                        <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                          {isSubmitting ? "Submitting..." : "Get Free Quote"}
-                          <ArrowUpRight size={18} />
-                        </button>
-                        {formError.hero && (
-                          <p className="text-red-500 text-xs mt-2 text-center">{formError.hero}</p>
-                        )}
-                      </form>
-                      <p className="text-center text-muted-foreground text-xs mt-4">We&apos;ll respond within 30 minutes</p>
-                    </>
-                  ) : (
-                    <div className="text-center py-8">
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Check className="w-8 h-8 text-green-600" />
+              <div className="glass-card p-8 rounded-[24px] relative">
+                {!heroFormSubmitted ? (
+                  <>
+                    <h3 className="text-xl font-bold font-display mb-1">Get Your Free Consultation</h3>
+                    <p className="text-muted-foreground text-sm mb-6">Fill in your details and we&apos;ll get back to you</p>
+                    <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero", "hero_form")}>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                        <div>
+                          <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Phone (10 digits)"
+                            required
+                            maxLength={10}
+                            pattern="[6-9][0-9]{9}"
+                            className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${phoneError.hero ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
+                              }`}
+                            onChange={(e) => {
+                              // Only allow digits
+                              const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                              e.target.value = value;
+                              // Clear error when user starts typing
+                              if (phoneError.hero) {
+                                setPhoneError({ hero: undefined });
+                              }
+                            }}
+                          />
+                          {phoneError.hero && (
+                            <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                              <span>⚠</span> {phoneError.hero}
+                            </p>
+                          )}
+                          {!phoneError.hero && (
+                            <p className="text-muted-foreground text-xs mt-1">10-digit mobile number</p>
+                          )}
+                        </div>
                       </div>
-                      <h3 className="text-xl font-bold mb-2">Thanks! We&apos;ll contact you within 30 minutes</h3>
-                      <p className="text-muted-foreground text-sm mb-6">Or chat with us right now on WhatsApp for a faster response</p>
-                      <a
-                        href={WHATSAPP_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
-                        onClick={handleWhatsAppClick}
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Chat on WhatsApp Now
-                      </a>
+                      <div>
+                        <select name="businessType" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                          <option value="">Select your business type</option>
+                          <option>Interior Designer</option>
+                          <option>Construction Company</option>
+                          <option>Architecture Firm</option>
+                          <option>Real Estate</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <select name="service" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                          <option value="">What service do you need?</option>
+                          {SERVICE_OPTIONS.map((service) => (
+                            <option key={service} value={service}>{service}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
+                        {isSubmitting ? "Submitting..." : "Get Free Quote"}
+                        <ArrowUpRight size={18} />
+                      </button>
+                      {formError.hero && (
+                        <p className="text-red-500 text-xs mt-2 text-center">{formError.hero}</p>
+                      )}
+                    </form>
+                    <p className="text-center text-muted-foreground text-xs mt-4">We&apos;ll respond within 30 minutes</p>
+                  </>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Check className="w-8 h-8 text-green-600" />
                     </div>
-                  )}
+                    <h3 className="text-xl font-bold mb-2">Thanks! We&apos;ll contact you within 30 minutes</h3>
+                    <p className="text-muted-foreground text-sm mb-6">Or chat with us right now on WhatsApp for a faster response</p>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
+                      onClick={handleWhatsAppClick}
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                      Chat on WhatsApp Now
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -697,7 +696,7 @@ export default function Home() {
           <div className="container py-7">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="text-center md:text-left">
-                  <div className="text-2xl md:text-4xl font-extrabold text-white font-display">26+</div>
+                <div className="text-2xl md:text-4xl font-extrabold text-white font-display">26+</div>
                 <div className="text-white/60 text-sm uppercase tracking-wider font-semibold">Clients Served</div>
               </div>
               <div className="text-center md:text-left md:border-l md:border-white/15 md:pl-8">
@@ -729,25 +728,25 @@ export default function Home() {
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-glow-purple opacity-30 pointer-events-none" />
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
-                <span className="h-[1px] w-8 bg-border" />
-                <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">The Problem</span>
-                <span className="h-[1px] w-8 bg-border" />
-              </div>
-              <h2 data-reveal>Are You <span className="text-gradient-orange">Losing Projects</span> to Competitors?</h2>
+            <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
+              <span className="h-[1px] w-8 bg-border" />
+              <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">The Problem</span>
+              <span className="h-[1px] w-8 bg-border" />
+            </div>
+            <h2 data-reveal>Are You <span className="text-gradient-orange">Losing Projects</span> to Competitors?</h2>
           </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { icon: <Search className="w-7 h-7" />, text: "Customers can't find you when they search on Google" },
-                { icon: <ImageIcon className="w-7 h-7" />, text: "No professional way to showcase your portfolio online" },
-                { icon: <TrendingUp className="w-7 h-7" />, text: "Missing out on high-value projects because of poor online presence" },
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { icon: <Search className="w-7 h-7" />, text: "Customers can't find you when they search on Google" },
+              { icon: <ImageIcon className="w-7 h-7" />, text: "No professional way to showcase your portfolio online" },
+              { icon: <TrendingUp className="w-7 h-7" />, text: "Missing out on high-value projects because of poor online presence" },
             ].map((item, i) => (
               <div key={i} className="group bg-card rounded-xl border border-border p-8 text-center hover:border-foreground/20 hover:-translate-y-1 transition-all duration-300 hover:shadow-lg" data-reveal>
-                  <div className="w-16 h-16 bg-foreground/5 rounded-xl flex items-center justify-center mx-auto mb-6 text-foreground/60 group-hover:bg-foreground/10 transition-colors">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-lg font-bold">{item.text}</h3>
+                <div className="w-16 h-16 bg-foreground/5 rounded-xl flex items-center justify-center mx-auto mb-6 text-foreground/60 group-hover:bg-foreground/10 transition-colors">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-bold">{item.text}</h3>
               </div>
             ))}
           </div>
@@ -759,24 +758,24 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-glow-blue opacity-40 pointer-events-none" />
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
-                <span className="h-[1px] w-8 bg-border" />
-                <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Our Solution</span>
-                <span className="h-[1px] w-8 bg-border" />
-              </div>
-              <h2 data-reveal>Professional Websites That <span className="text-gradient-orange">Actually Bring</span> in Customers</h2>
+            <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
+              <span className="h-[1px] w-8 bg-border" />
+              <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Our Solution</span>
+              <span className="h-[1px] w-8 bg-border" />
             </div>
+            <h2 data-reveal>Professional Websites That <span className="text-gradient-orange">Actually Bring</span> in Customers</h2>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {features.map((f, i) => (
-                <div key={i} className="group relative bg-white rounded-xl border border-border p-8 hover:border-foreground/20 hover:-translate-y-1 transition-all duration-300 overflow-hidden hover:shadow-lg" data-reveal>
-                  <div className="absolute top-4 right-6 text-5xl font-black text-foreground/5 font-display select-none">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  <div className="w-14 h-14 bg-foreground/5 rounded-lg flex items-center justify-center mb-6 text-foreground/60 group-hover:bg-foreground/10 transition-colors">
-                    {f.icon}
-                  </div>
-                  <h3 className="text-lg font-bold mb-3">{f.title}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((f, i) => (
+              <div key={i} className="group relative bg-white rounded-xl border border-border p-8 hover:border-foreground/20 hover:-translate-y-1 transition-all duration-300 overflow-hidden hover:shadow-lg" data-reveal>
+                <div className="absolute top-4 right-6 text-5xl font-black text-foreground/5 font-display select-none">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <div className="w-14 h-14 bg-foreground/5 rounded-lg flex items-center justify-center mb-6 text-foreground/60 group-hover:bg-foreground/10 transition-colors">
+                  {f.icon}
+                </div>
+                <h3 className="text-lg font-bold mb-3">{f.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
@@ -790,11 +789,11 @@ export default function Home() {
           <div className="relative overflow-hidden rounded-[20px] bg-[#0C1A78] px-8 py-10 md:px-14 md:py-14 flex flex-col md:flex-row items-center justify-between gap-8" data-reveal>
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_right,_rgba(125,65,255,0.15),transparent)] pointer-events-none" />
             <div className="relative z-10 max-w-lg">
-                <span className="text-white/70 text-sm font-bold tracking-widest uppercase mb-3 block">// Get In Touch</span>
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                  Ready to Grow Your <span className="text-[#25D366]">Interior Business</span> Online?
-                </h2>
-                <p className="text-white/70 text-sm leading-relaxed">
+              <span className="text-white/70 text-sm font-bold tracking-widest uppercase mb-3 block">// Get In Touch</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                Ready to Grow Your <span className="text-[#25D366]">Interior Business</span> Online?
+              </h2>
+              <p className="text-white/70 text-sm leading-relaxed">
                 Limited slots available this month. Book your free consultation and let&apos;s build your digital presence.
               </p>
             </div>
@@ -805,7 +804,7 @@ export default function Home() {
               className="btn-pill bg-[#25D366] text-white flex items-center gap-2.5 shadow-lg whitespace-nowrap relative z-10"
               onClick={handleWhatsAppClick}
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
               Chat With Us on WhatsApp
             </a>
           </div>
@@ -816,31 +815,31 @@ export default function Home() {
       <section className="section-padding relative overflow-hidden">
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
-                <span className="h-[1px] w-8 bg-border" />
-                <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Social Proof</span>
-                <span className="h-[1px] w-8 bg-border" />
-              </div>
-              <h2 data-reveal>Trusted by <span className="text-gradient-orange">26+ Businesses</span></h2>
+            <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
+              <span className="h-[1px] w-8 bg-border" />
+              <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Social Proof</span>
+              <span className="h-[1px] w-8 bg-border" />
+            </div>
+            <h2 data-reveal>Trusted by <span className="text-gradient-orange">26+ Businesses</span></h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto" data-reveal>
               From Mangalore to Dubai — businesses trust us to build their digital presence
             </p>
           </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5 md:gap-6">
-                      {clients.map((client, i) => (
-                        <div key={i} className="group bg-card rounded-xl border border-border px-6 py-8 flex flex-col items-center justify-center text-center hover:border-foreground/20 transition-all duration-300 hover:shadow-md min-h-[120px]" data-reveal>
-                          {client.logo ? (
-                            <img src={client.logo} alt={`${client.name} logo`} className="h-10 md:h-12 w-auto object-contain max-w-[180px] grayscale group-hover:grayscale-0 transition-all" loading="lazy" />
-                          ) : (
-                            <span className="text-lg md:text-xl font-bold font-display text-foreground/80 tracking-tight leading-tight group-hover:text-foreground transition-colors">{client.name}</span>
-                          )}
-                          <span className="flex items-center gap-1 text-muted-foreground text-[11px] mt-3">
-                            <MapPin className="w-3 h-3" /> {client.location}
-                          </span>
-                      </div>
-                    ))}
-                  </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5 md:gap-6">
+            {clients.map((client, i) => (
+              <div key={i} className="group bg-card rounded-xl border border-border px-6 py-8 flex flex-col items-center justify-center text-center hover:border-foreground/20 transition-all duration-300 hover:shadow-md min-h-[120px]" data-reveal>
+                {client.logo ? (
+                  <img src={client.logo} alt={`${client.name} logo`} className="h-10 md:h-12 w-auto object-contain max-w-[180px] grayscale group-hover:grayscale-0 transition-all" loading="lazy" />
+                ) : (
+                  <span className="text-lg md:text-xl font-bold font-display text-foreground/80 tracking-tight leading-tight group-hover:text-foreground transition-colors">{client.name}</span>
+                )}
+                <span className="flex items-center gap-1 text-muted-foreground text-[11px] mt-3">
+                  <MapPin className="w-3 h-3" /> {client.location}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -849,27 +848,27 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-glow-purple opacity-30 pointer-events-none" />
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
-                <span className="h-[1px] w-8 bg-border" />
-                <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Our Work</span>
-                <span className="h-[1px] w-8 bg-border" />
-              </div>
-              <h2 data-reveal>Websites <span className="text-gradient-orange">We&apos;ve Built</span></h2>
+            <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
+              <span className="h-[1px] w-8 bg-border" />
+              <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Our Work</span>
+              <span className="h-[1px] w-8 bg-border" />
+            </div>
+            <h2 data-reveal>Websites <span className="text-gradient-orange">We&apos;ve Built</span></h2>
           </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {portfolio.map((item, i) => (
-              <a 
-                key={i} 
-                href={item.url} 
-                target="_blank" 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {portfolio.map((item, i) => (
+              <a
+                key={i}
+                href={item.url}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-white rounded-xl border border-border overflow-hidden hover:border-foreground/20 transition-all duration-300 hover:shadow-lg block" 
+                className="group bg-white rounded-xl border border-border overflow-hidden hover:border-foreground/20 transition-all duration-300 hover:shadow-lg block"
                 data-reveal
               >
                 <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center relative overflow-hidden`}>
                   {/* Website Thumbnail using screenshot service */}
-                  <img 
+                  <img
                     src={`https://image.thum.io/get/width/800/crop/600/${item.url}`}
                     alt={`${item.type} website preview`}
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
@@ -921,19 +920,19 @@ export default function Home() {
       <section id="process" className="section-padding relative overflow-hidden">
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
-                <span className="h-[1px] w-8 bg-border" />
-                <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Process</span>
-                <span className="h-[1px] w-8 bg-border" />
-              </div>
-              <h2 data-reveal>Get Your Website in <span className="text-gradient-orange">30 Days</span></h2>
+            <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
+              <span className="h-[1px] w-8 bg-border" />
+              <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Process</span>
+              <span className="h-[1px] w-8 bg-border" />
+            </div>
+            <h2 data-reveal>Get Your Website in <span className="text-gradient-orange">30 Days</span></h2>
           </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {steps.map((step, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {steps.map((step, i) => (
               <div key={i} className="relative bg-card rounded-xl border border-border p-8 text-center group hover:border-foreground/20 transition-all duration-300 hover:shadow-md" data-reveal>
-                  <div className="text-5xl font-black text-foreground/5 font-display mb-4">{step.num}</div>
-                  <h3 className="font-display font-bold text-lg mb-3">{step.title}</h3>
+                <div className="text-5xl font-black text-foreground/5 font-display mb-4">{step.num}</div>
+                <h3 className="font-display font-bold text-lg mb-3">{step.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
                 {i < steps.length - 1 && (
                   <div className="hidden lg:block absolute top-1/2 -right-4 z-10">
@@ -951,20 +950,20 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-glow-blue opacity-30 pointer-events-none" />
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
-                <span className="h-[1px] w-8 bg-border" />
-                <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Pricing</span>
-                <span className="h-[1px] w-8 bg-border" />
-              </div>
-              <h2 data-reveal><span className="text-gradient-orange">Transparent</span> Pricing</h2>
+            <div className="flex items-center justify-center gap-2 mb-4" data-reveal>
+              <span className="h-[1px] w-8 bg-border" />
+              <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Pricing</span>
+              <span className="h-[1px] w-8 bg-border" />
+            </div>
+            <h2 data-reveal><span className="text-gradient-orange">Transparent</span> Pricing</h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto" data-reveal>
               No hidden costs. Choose the plan that fits your business.
             </p>
           </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {pricing.map((plan, i) => (
-                <div key={i} className={`relative bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${plan.popular ? "border-2 border-primary shadow-[0_0_40px_-12px_rgba(12,26,120,0.15)]" : "border border-border"}`} data-reveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {pricing.map((plan, i) => (
+              <div key={i} className={`relative bg-white rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${plan.popular ? "border-2 border-primary shadow-[0_0_40px_-12px_rgba(12,26,120,0.15)]" : "border border-border"}`} data-reveal>
                 {plan.popular && (
                   <div className="bg-primary text-white text-xs font-bold font-display text-center py-2 tracking-wider uppercase">
                     Most Popular
@@ -978,10 +977,10 @@ export default function Home() {
                   </div>
                   <ul className="space-y-4 mb-8">
                     {plan.features.map((feat, j) => (
-                        <li key={j} className="flex items-center gap-3 text-sm">
-                          <div className="w-5 h-5 rounded-full bg-foreground/10 flex items-center justify-center flex-shrink-0">
-                            <Check className="w-3 h-3 text-foreground/50" />
-                          </div>
+                      <li key={j} className="flex items-center gap-3 text-sm">
+                        <div className="w-5 h-5 rounded-full bg-foreground/10 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-3 h-3 text-foreground/50" />
+                        </div>
                         <span className="text-foreground/80">{feat}</span>
                       </li>
                     ))}
@@ -1008,7 +1007,7 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-glow-purple opacity-40 pointer-events-none" />
         <div className="container relative z-10">
           <div className="text-center mb-14">
-              <h2 data-reveal>Ready to Get More <span className="text-gradient-orange">Projects Online?</span></h2>
+            <h2 data-reveal>Ready to Get More <span className="text-gradient-orange">Projects Online?</span></h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto" data-reveal>
               Limited slots available this month — Book your free consultation now
             </p>
@@ -1021,7 +1020,7 @@ export default function Home() {
                 className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2.5 shadow-[0_8px_24px_-6px_rgba(37,211,102,0.35)] text-base"
                 onClick={handleWhatsAppClick}
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
                 Get Free Consultation on WhatsApp
               </a>
             </div>
@@ -1039,24 +1038,23 @@ export default function Home() {
                   <div>
                     <label className="text-foreground text-sm font-semibold mb-1.5 block">Phone <span className="text-red-500">*</span></label>
                     <div>
-                      <input 
-                        type="tel" 
-                        name="phone" 
-                        placeholder="Your phone number (10 digits)" 
-                        required 
+                      <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Your phone number (10 digits)"
+                        required
                         maxLength={10}
                         pattern="[6-9][0-9]{9}"
-                        className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${
-                          phoneError.footer ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
-                        }`}
+                        className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${phoneError.footer ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
+                          }`}
                         onChange={(e) => {
                           // Only allow digits
                           const value = e.target.value.replace(/\D/g, '').slice(0, 10);
                           e.target.value = value;
                           // Clear error when user starts typing
                           if (phoneError.footer) {
-                                setPhoneError({ footer: undefined });
-                              }
+                            setPhoneError({ footer: undefined });
+                          }
                         }}
                       />
                       {phoneError.footer && (
@@ -1102,7 +1100,7 @@ export default function Home() {
                     className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
                     onClick={handleWhatsAppClick}
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
                     Chat on WhatsApp Now
                   </a>
                 </div>
@@ -1110,7 +1108,7 @@ export default function Home() {
             </div>
             <p className="text-center text-muted-foreground mt-6 text-sm" data-reveal>
               Or call us directly:{" "}
-                <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
+              <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-foreground font-semibold hover:underline" onClick={() => trackConversion("phone_click")}>
                 {CONTACT_DISPLAY_1}
               </a>
               {" or "}
@@ -1122,125 +1120,127 @@ export default function Home() {
         </div>
       </section>
 
-        {/* ===== FOOTER ===== */}
-        <footer className="bg-[#0C1A78] text-white pt-14 pb-6">
-          <div className="container">
-            {/* Trust bar */}
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 pb-10 mb-10 border-b border-white/15">
-              <div className="flex items-center gap-2 text-white/80 text-sm">
-                <Check className="w-4 h-4 text-[#25D366]" />
-                5+ Years in Business
-              </div>
-              <div className="flex items-center gap-2 text-white/80 text-sm">
-                <Check className="w-4 h-4 text-[#25D366]" />
-                26+ Clients Served
-              </div>
-              <div className="flex items-center gap-2 text-white/80 text-sm">
-                <Check className="w-4 h-4 text-[#25D366]" />
-                4.9 Star Rating
-              </div>
-              <div className="flex items-center gap-2 text-white/80 text-sm">
-                <Check className="w-4 h-4 text-[#25D366]" />
-                30 Min Response Time
-              </div>
+      {/* ===== FOOTER ===== */}
+      <footer className="bg-[#0C1A78] text-white pt-14 pb-6">
+        <div className="container">
+          {/* Trust bar */}
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 pb-10 mb-10 border-b border-white/15">
+            <div className="flex items-center gap-2 text-white/80 text-sm">
+              <Check className="w-4 h-4 text-[#25D366]" />
+              5+ Years in Business
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-              <div className="md:col-span-1">
-                    <img src="/arovida-light.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 w-auto mb-5 object-contain" loading="lazy" width="120" height="56" />
-                <p className="text-white/60 text-sm mb-6 leading-relaxed">Professional websites for interior designers &amp; construction companies. Built to get you more projects.</p>
-                <div className="flex items-center gap-3">
-                  {[
-                    { icon: <Facebook size={16} />, label: "Facebook" },
-                    { icon: <Instagram size={16} />, label: "Instagram" },
-                    { icon: <Linkedin size={16} />, label: "LinkedIn" },
-                    { icon: <Twitter size={16} />, label: "Twitter" },
-                  ].map((social) => (
-                    <a
-                      key={social.label}
-                      href="#"
-                      aria-label={social.label}
-                      className="w-9 h-9 bg-white/10 border border-white/15 rounded-lg flex items-center justify-center text-white/60 hover:bg-white/20 hover:text-white transition-all"
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-white font-display font-bold mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
-                <ul className="space-y-3">
-                  {["Services", "Portfolio", "Process", "Pricing", "Contact"].map((link) => (
-                    <li key={link}>
-                      <a href={`#${link.toLowerCase()}`} className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2">
-                        <ChevronRight className="w-3 h-3" /> {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-display font-bold mb-5 text-sm uppercase tracking-wider">Services</h4>
-                <ul className="space-y-3">
-                  {["Website Design", "Logo Design", "SEO", "Digital Marketing", "E-Commerce"].map((service) => (
-                    <li key={service}>
-                      <a href="#services" className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2">
-                        <ChevronRight className="w-3 h-3" /> {service}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-display font-bold mb-5 text-sm uppercase tracking-wider">Contact Us</h4>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3 text-sm text-white/60">
-                    <MapPin className="w-4 h-4 text-white/40 mt-0.5 flex-shrink-0" />
-                    Adyandka, Punacha Vittal DK,<br />Karnataka 574260
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-white/60">
-                    <Mail className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`mailto:${EMAIL_PRIMARY}`} className="hover:text-white transition-colors">{EMAIL_PRIMARY}</a>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-white/60">
-                    <Mail className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`mailto:${EMAIL_SECONDARY}`} className="hover:text-white transition-colors">{EMAIL_SECONDARY}</a>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-white/60">
-                    <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY_1}</a>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-white/60">
-                    <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href={`tel:${CONTACT_DISPLAY_2.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY_2}</a>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-white/60">
-                    <ArrowUpRight className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <a href="https://arovidatechnologies.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">arovidatechnologies.com</a>
-                  </div>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#25D366] text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-[#20bd5a] transition-colors mt-2"
-                    onClick={handleWhatsAppClick}
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Chat on WhatsApp
-                  </a>
-                </div>
-              </div>
+            <div className="flex items-center gap-2 text-white/80 text-sm">
+              <Check className="w-4 h-4 text-[#25D366]" />
+              26+ Clients Served
             </div>
-
-            <div className="border-t border-white/15 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-white/50 text-sm">&copy; 2026 Arovida. All rights reserved.</p>
-              <p className="text-white/40 text-xs">Designed &amp; built with care in Mangalore, India</p>
+            <div className="flex items-center gap-2 text-white/80 text-sm">
+              <Check className="w-4 h-4 text-[#25D366]" />
+              4.9 Star Rating
+            </div>
+            <div className="flex items-center gap-2 text-white/80 text-sm">
+              <Check className="w-4 h-4 text-[#25D366]" />
+              30 Min Response Time
             </div>
           </div>
-        </footer>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div className="md:col-span-1">
+              <img src="/arovida-white.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 w-auto mb-5 object-contain" loading="lazy" width="120" height="56" />
+              <p className="text-white/60 text-sm mb-6 leading-relaxed">Professional websites for interior designers &amp; construction companies. Built to get you more projects.</p>
+              <div className="flex items-center gap-3">
+                {[
+                  { icon: <Facebook size={16} />, label: "Facebook", url: "https://www.facebook.com/profile.php?id=61587350605043" },
+                  { icon: <Instagram size={16} />, label: "Instagram", url: "https://www.instagram.com/arovidaa/" },
+                  { icon: <Linkedin size={16} />, label: "LinkedIn", url: "https://www.linkedin.com/company/112100014/" },
+                  { icon: <Twitter size={16} />, label: "X (Twitter)", url: "https://x.com/Arovidaa" },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="w-9 h-9 bg-white/10 border border-white/15 rounded-lg flex items-center justify-center text-white/60 hover:bg-white/20 hover:text-white transition-all"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-white font-display font-bold mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
+              <ul className="space-y-3">
+                {["Services", "Portfolio", "Process", "Pricing", "Contact"].map((link) => (
+                  <li key={link}>
+                    <a href={`#${link.toLowerCase()}`} className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2">
+                      <ChevronRight className="w-3 h-3" /> {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-white font-display font-bold mb-5 text-sm uppercase tracking-wider">Services</h4>
+              <ul className="space-y-3">
+                {["Website Design", "Logo Design", "SEO", "Digital Marketing", "E-Commerce"].map((service) => (
+                  <li key={service}>
+                    <a href="#services" className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2">
+                      <ChevronRight className="w-3 h-3" /> {service}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-white font-display font-bold mb-5 text-sm uppercase tracking-wider">Contact Us</h4>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3 text-sm text-white/60">
+                  <MapPin className="w-4 h-4 text-white/40 mt-0.5 flex-shrink-0" />
+                  Adyandka, Punacha Vittal DK,<br />Karnataka 574260
+                </div>
+                <div className="flex items-center gap-3 text-sm text-white/60">
+                  <Mail className="w-4 h-4 text-white/40 flex-shrink-0" />
+                  <a href={`mailto:${EMAIL_PRIMARY}`} className="hover:text-white transition-colors">{EMAIL_PRIMARY}</a>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-white/60">
+                  <Mail className="w-4 h-4 text-white/40 flex-shrink-0" />
+                  <a href={`mailto:${EMAIL_SECONDARY}`} className="hover:text-white transition-colors">{EMAIL_SECONDARY}</a>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-white/60">
+                  <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
+                  <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY_1}</a>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-white/60">
+                  <Phone className="w-4 h-4 text-white/40 flex-shrink-0" />
+                  <a href={`tel:${CONTACT_DISPLAY_2.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{CONTACT_DISPLAY_2}</a>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-white/60">
+                  <ArrowUpRight className="w-4 h-4 text-white/40 flex-shrink-0" />
+                  <a href="https://arovidatechnologies.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">arovidatechnologies.com</a>
+                </div>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#25D366] text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-[#20bd5a] transition-colors mt-2"
+                  onClick={handleWhatsAppClick}
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                  Chat on WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-white/15 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/50 text-sm">&copy; 2026 Arovida. All rights reserved.</p>
+            <p className="text-white/40 text-xs">Designed &amp; built with care in Mangalore, India</p>
+          </div>
+        </div>
+      </footer>
 
       {/* ===== FLOATING WHATSAPP (Mobile) ===== */}
       <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur-md border-t border-border lg:hidden">
@@ -1251,7 +1251,7 @@ export default function Home() {
           className="w-full py-4 bg-[#25D366] text-white rounded-xl font-bold font-display flex items-center justify-center gap-2.5 shadow-[0_-4px_20px_-4px_rgba(37,211,102,0.2)] text-base"
           onClick={handleWhatsAppClick}
         >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
           WhatsApp Us Now
         </a>
       </div>
