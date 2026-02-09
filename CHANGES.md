@@ -59,6 +59,38 @@
 - ✅ Removed unnecessary headers
 - ✅ Added React strict mode
 
+### 7. Email Delivery (Resend)
+- ✅ Backend contact API (`src/app/api/contact/route.ts`) now uses **Resend** as the primary email service
+- ✅ All form submissions (hero form and footer contact form) send emails to **arovidatechnologies@gmail.com**
+- ✅ API returns clear JSON: `{ success, message, error? }` so the frontend can react properly
+- ✅ If `RESEND_API_KEY` is missing or Resend returns an error, the API responds with `success: false` and a helpful `error` code
+
+### 8. Frontend Form Handling & Validation
+- ✅ Frontend (`src/app/page.tsx`) now:
+  - Parses the JSON response from `/api/contact`
+  - Only shows the \"Thank you\" state when `success === true`
+  - Shows a friendly inline error message if the API reports a problem
+- ✅ Phone number validation:
+  - Enforces **10-digit Indian mobile numbers**
+  - Must start with **6, 7, 8, or 9**
+  - Shows clear validation messages for invalid input
+
+### 9. Favicon / Branding
+- ✅ Added custom favicon at `public/favicon.svg` using the Arovida \"A.\" mark
+- ✅ Updated `<head>` in `src/app/layout.tsx` to use the new favicon
+- ✅ Browser tab now shows the Arovida icon instead of the Vercel logo
+
+### 10. Environment Variables (IMPORTANT)
+- ✅ Email sending is controlled entirely by environment variables (no secrets in code):
+  - `RESEND_API_KEY` (required for production emails)
+    - Set this in **Vercel → Project → Settings → Environment Variables**
+    - Example name: `RESEND_API_KEY`
+    - Value: your Resend API key (from https://resend.com)
+- ✅ If `RESEND_API_KEY` is **missing or incorrect**:
+  - The API responds with `success: false` and `error: "RESEND_API_KEY_NOT_CONFIGURED"` or `RESEND_API_ERROR`
+  - The frontend shows a user-friendly error instead of a fake success
+- ✅ No API keys or secrets are committed to the repository
+
 ## 📋 Setup Instructions
 
 ### Environment Variables

@@ -235,6 +235,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneError, setPhoneError] = useState<{ hero?: string; footer?: string }>({});
+  const [formError, setFormError] = useState<{ hero?: string; footer?: string }>({});
   useReveal();
 
   useEffect(() => {
@@ -245,19 +246,19 @@ export default function Home() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: "hero" | "footer", conversionType: string = "form_submit") => {
     e.preventDefault();
-    
+
     const form = e.currentTarget;
     const formData = new FormData(form);
     const name = formData.get("name") as string || (form.querySelector('input[type="text"]') as HTMLInputElement)?.value || "";
     const phone = formData.get("phone") as string || (form.querySelector('input[type="tel"]') as HTMLInputElement)?.value || "";
     const businessType = formData.get("businessType") as string || (form.querySelector('select') as HTMLSelectElement)?.value || "";
     const service = formData.get("service") as string || (form.querySelectorAll('select')[1] as HTMLSelectElement)?.value || "";
-    const message = formData.get("message") as string || (form.querySelector('textarea') as HTMLTextAreaElement)?.value || "";
+    const message = (formData.get("message") as string | null) ?? (form.querySelector("textarea") as HTMLTextAreaElement | null)?.value ?? "";
 
     // Validate phone number
     const phoneValidation = validatePhoneNumber(phone);
     if (!phoneValidation.valid) {
-      setPhoneError({ [formType]: phoneValidation.error });
+      setPhoneError((prev) => ({ ...prev, [formType]: phoneValidation.error }));
       // Focus on phone input
       const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
       if (phoneInput) {
@@ -268,7 +269,8 @@ export default function Home() {
     }
 
     // Clear any previous errors
-    setPhoneError({ [formType]: undefined });
+    setPhoneError((prev) => ({ ...prev, [formType]: undefined }));
+    setFormError((prev) => ({ ...prev, [formType]: undefined }));
     setIsSubmitting(true);
     trackConversion(conversionType);
 
@@ -287,30 +289,32 @@ export default function Home() {
           formType: formType === "hero" ? "Hero Form" : "Contact Form",
         }),
       });
+      const data: { success?: boolean; message?: string; error?: string } | null = await response
+        .json()
+        .catch(() => null);
 
-      if (response.ok) {
+      if (response.ok && data?.success) {
         if (formType === "hero") {
           setHeroFormSubmitted(true);
         } else {
           setFooterFormSubmitted(true);
         }
+        setFormError((prev) => ({ ...prev, [formType]: undefined }));
       } else {
-        // Fallback: still show success but log error
-        console.error("Form submission error");
-        if (formType === "hero") {
-          setHeroFormSubmitted(true);
-        } else {
-          setFooterFormSubmitted(true);
-        }
+        const errorMessage =
+          data?.message ||
+          data?.error ||
+          "Something went wrong while submitting the form. Please try again.";
+
+        console.error("Form submission error", { status: response.status, data });
+        setFormError((prev) => ({ ...prev, [formType]: errorMessage }));
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Still show success to user
-      if (formType === "hero") {
-        setHeroFormSubmitted(true);
-      } else {
-        setFooterFormSubmitted(true);
-      }
+      setFormError((prev) => ({
+        ...prev,
+        [formType]: "Network error while submitting the form. Please check your connection and try again.",
+      }));
     } finally {
       setIsSubmitting(false);
     }
@@ -605,6 +609,9 @@ export default function Home() {
                           {isSubmitting ? "Submitting..." : "Get Free Quote"}
                           <ArrowUpRight size={18} />
                         </button>
+                        {formError.hero && (
+                          <p className="text-red-500 text-xs mt-2 text-center">{formError.hero}</p>
+                        )}
                       </form>
                       <p className="text-center text-muted-foreground text-xs mt-4">We&apos;ll respond within 30 minutes</p>
                     </>
@@ -1024,6 +1031,9 @@ export default function Home() {
                     {isSubmitting ? "Sending..." : "Send Message"}
                     <Send size={16} />
                   </button>
+                  {formError.footer && (
+                    <p className="text-red-500 text-xs mt-2 text-center">{formError.footer}</p>
+                  )}
                 </form>
               ) : (
                 <div className="text-center py-8">
