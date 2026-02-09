@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 /**
  * Contact form handler
  *
- * Sends an email to arovidatechnologies@gmail.com using Resend.
- * - Requires RESEND_API_KEY to be set in the environment (Vercel project settings).
- * - Returns JSON with { success, message, error? } so the frontend can react properly.
+ * Sends an email to arovidatechnologies@gmail.com using Gmail SMTP.
+ * Required environment variables:
+ * - SMTP_HOST (e.g., smtp.gmail.com)
+ * - SMTP_PORT (e.g., 587)
+ * - SMTP_USER (your Gmail address)
+ * - SMTP_PASS (Gmail App Password - 16 chars, no spaces)
  */
 export async function POST(request: NextRequest) {
   try {
@@ -18,6 +22,14 @@ export async function POST(request: NextRequest) {
       message?: string;
       formType?: string;
     };
+
+    // Validate required fields
+    if (!name || !phone) {
+      return NextResponse.json(
+        { success: false, message: "Name and phone are required" },
+        { status: 400 }
+      );
+    }
 
     const emailSubject = `New Contact Form Submission - ${formType || "Website"}`;
 
@@ -47,83 +59,73 @@ export async function POST(request: NextRequest) {
       </html>
     `;
 
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    // Get SMTP configuration from environment
+    const SMTP_HOST = process.env.SMTP_HOST;
+    const SMTP_PORT = process.env.SMTP_PORT;
+    const SMTP_USER = process.env.SMTP_USER;
+    const SMTP_PASS = process.env.SMTP_PASS;
 
-    if (!RESEND_API_KEY) {
-      console.error("❌ RESEND_API_KEY is not configured. Unable to send email.", {
-        formData: { name, phone, businessType, service, message, formType },
+    // Check if all SMTP variables are configured
+    if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+      console.error("❌ SMTP configuration missing", {
+        hasHost: !!SMTP_HOST,
+        hasPort: !!SMTP_PORT,
+        hasUser: !!SMTP_USER,
+        hasPass: !!SMTP_PASS,
       });
 
       return NextResponse.json(
         {
           success: false,
-          message: "Email service not configured. Please set RESEND_API_KEY in your environment.",
-          error: "RESEND_API_KEY_NOT_CONFIGURED",
+          message: "Email service not configured. Please contact us via WhatsApp.",
+          error: "SMTP_NOT_CONFIGURED",
         },
         { status: 500 }
       );
     }
 
     try {
-      const resendResponse = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${RESEND_API_KEY}`,
+      // Create Nodemailer transporter with Gmail SMTP
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: parseInt(SMTP_PORT, 10),
+        secure: parseInt(SMTP_PORT, 10) === 465, // true for 465, false for other ports
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_PASS,
         },
-        body: JSON.stringify({
-          // IMPORTANT:
-          // Use Resend's default verified sender until your own domain is verified.
-          // After you verify arovidatechnologies.com in Resend, you can change this to
-          // something like: "Arovida Website <noreply@arovidatechnologies.com>"
-          from: "Arovida Website <onboarding@resend.dev>",
-          to: ["arovidatechnologies@gmail.com"],
-          subject: emailSubject,
-          html: emailHtml,
-        }),
       });
 
-      const resendData = await resendResponse.json().catch(() => ({}));
-
-      if (!resendResponse.ok || !resendData?.id) {
-        console.error("❌ Resend API error", {
-          status: resendResponse.status,
-          statusText: resendResponse.statusText,
-          response: resendData,
-          formData: { name, phone, businessType, service, message, formType },
-        });
-
-        return NextResponse.json(
-          {
-            success: false,
-            message: "Failed to send email. Please try again later.",
-            error: "RESEND_API_ERROR",
-          },
-          { status: 502 }
-        );
-      }
-
-      console.log("✅ Email sent successfully via Resend", {
+      // Send the email
+      const info = await transporter.sendMail({
+        from: `"Arovida Website" <${SMTP_USER}>`,
         to: "arovidatechnologies@gmail.com",
-        id: resendData.id,
+        subject: emailSubject,
+        html: emailHtml,
+        replyTo: SMTP_USER,
+      });
+
+      console.log("✅ Email sent successfully via Gmail SMTP", {
+        to: "arovidatechnologies@gmail.com",
+        messageId: info.messageId,
         formType,
       });
 
       return NextResponse.json({
         success: true,
-        message: "Form submitted successfully",
+        message: "Form submitted successfully! We'll contact you soon.",
       });
-    } catch (error) {
-      console.error("❌ Unexpected error sending email via Resend", {
-        error,
+    } catch (emailError) {
+      console.error("❌ Error sending email via SMTP", {
+        error: emailError,
         formData: { name, phone, businessType, service, message, formType },
       });
 
       return NextResponse.json(
         {
           success: false,
-          message: "Unexpected error while sending email.",
-          error: "RESEND_UNEXPECTED_ERROR",
+          message: "Failed to send email. Please try WhatsApp or call us directly.",
+          error: "SMTP_SEND_ERROR",
         },
         { status: 500 }
       );
@@ -132,9 +134,8 @@ export async function POST(request: NextRequest) {
     console.error("❌ Error processing contact form request", error);
 
     return NextResponse.json(
-      { success: false, message: "Failed to submit form" },
+      { success: false, message: "Failed to submit form. Please try again." },
       { status: 400 }
     );
   }
 }
-
