@@ -94,6 +94,14 @@ const portfolio = [
     description: "Professional website for interior and construction company",
   },
   {
+    type: "Architecture & Consulting",
+    result: "Professional branding",
+    color: "from-[#1a1a2e] to-[#3b82f6]",
+    url: "https://testrepo01-five.vercel.app/",
+    thumbnail: "https://testrepo01-five.vercel.app/",
+    description: "Modern architecture and consulting firm website",
+  },
+  {
     type: "Industrial Printing Machinery",
     result: "Ranked #1 on Google",
     color: "from-[#ff9c22] to-[#e74c3c]",
