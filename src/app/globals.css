@@ -62,45 +62,34 @@
   --animate-spin-slow: spin 8s linear infinite;
 
   @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--radix-accordion-content-height); }
+    from {
+      height: 0;
+    }
+
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
+
   @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+
+    to {
+      height: 0;
+    }
   }
 }
 
 @layer base {
+
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-border);
-  }
-
-  :root {
-    --background: #ffffff;
-    --foreground: #1a1a2e;
-    --card: #f5f4fb;
-    --card-foreground: #1a1a2e;
-    --popover: #ffffff;
-    --popover-foreground: #1a1a2e;
-    --primary: #0C1A78;
-    --primary-foreground: #ffffff;
-    --secondary: #ae82ed;
-    --secondary-foreground: #ffffff;
-    --muted: #f0eef8;
-    --muted-foreground: #5a5f7a;
-    --accent: #ae82ed;
-    --accent-foreground: #ffffff;
-    --destructive: #ef4444;
-    --destructive-foreground: #fafafa;
-    --border: #ddd8f0;
-    --input: #ddd8f0;
-    --ring: #0C1A78;
-    --radius: 0.75rem;
   }
 
   html {
@@ -115,16 +104,30 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-foreground);
   }
 
-  h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; }
-  h2 { font-size: clamp(2rem, 4vw, 2.6rem); }
-  h3 { font-size: 1.5rem; }
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
 
   .container {
     width: 100%;
@@ -157,15 +160,15 @@
     background: radial-gradient(circle at center, rgba(174, 130, 237, 0.08) 0%, transparent 70%);
   }
 
-    .bg-glow-blue {
-      background: radial-gradient(circle at center, rgba(12, 26, 120, 0.05) 0%, transparent 70%);
-    }
+  .bg-glow-blue {
+    background: radial-gradient(circle at center, rgba(12, 26, 120, 0.05) 0%, transparent 70%);
+  }
 
-    .text-gradient-orange {
-      background: linear-gradient(135deg, #0C1A78, #5B4AC7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #0C1A78, #5B4AC7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
   .rotating-badge-text {
     animation: spin 10s linear infinite;
@@ -205,6 +208,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

@@ -24,12 +24,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   // swcMinify is enabled by default in Next.js 15, no need to specify
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   turbopack: {
     rules: {
       "*.{jsx,tsx}": {

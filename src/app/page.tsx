@@ -44,6 +44,15 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`
 // Optional fallback: client-side Web3Forms (requires NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY)
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
+/* ===== REUSABLE WHATSAPP ICON ===== */
+function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
+
 function trackConversion(type: string) {
   if (typeof window !== "undefined" && (window as any).gtag) {
     (window as any).gtag("event", "conversion", {
@@ -90,7 +99,7 @@ const portfolio = [
     result: "50% increase in inquiries",
     color: "from-[#7d41ff] to-[#3b82f6]",
     url: "https://www.novastylesinterior.com/",
-    thumbnail: "https://www.novastylesinterior.com/",
+    thumbnail: "/portfolio/novastyles.png",
     description: "Professional website for interior and construction company",
   },
   {
@@ -98,7 +107,7 @@ const portfolio = [
     result: "Professional branding",
     color: "from-[#1a1a2e] to-[#3b82f6]",
     url: "https://testrepo01-five.vercel.app/",
-    thumbnail: "https://testrepo01-five.vercel.app/",
+    thumbnail: "/portfolio/architecture-consulting.png",
     description: "Modern architecture and consulting firm website",
   },
   {
@@ -106,7 +115,7 @@ const portfolio = [
     result: "Ranked #1 on Google",
     color: "from-[#ff9c22] to-[#e74c3c]",
     url: "https://www.premiermachineries.com/",
-    thumbnail: "https://www.premiermachineries.com/",
+    thumbnail: "/portfolio/premier-machineries.png",
     description: "Industrial level printing machine dealer website - Mangalore",
   },
   {
@@ -114,8 +123,24 @@ const portfolio = [
     result: "Modern portfolio showcase",
     color: "from-[#3b82f6] to-[#7d41ff]",
     url: "https://www.xiphiasimmigration.com/",
-    thumbnail: "https://www.xiphiasimmigration.com/",
+    thumbnail: "/portfolio/xiphias-immigration.png",
     description: "Professional immigration consultancy website - Dubai",
+  },
+  {
+    type: "Organic Farms & Retreats",
+    result: "Heritage brand showcase",
+    color: "from-[#2d5a27] to-[#8bc34a]",
+    url: "https://varanasi-modern-website.vercel.app/",
+    thumbnail: "/portfolio/varanashi.png",
+    description: "Six generations of organic farming — Varanashi heritage website",
+  },
+  {
+    type: "Poultry & Agro Industry",
+    result: "Corporate digital presence",
+    color: "from-[#1a237e] to-[#42a5f5]",
+    url: "https://bharathagrovet.vercel.app/",
+    thumbnail: "/portfolio/bharath-agrovet.png",
+    description: "Leading poultry producer in coastal Karnataka — Bharath Agrovet",
   },
 ];
 
@@ -566,7 +591,7 @@ export default function Home() {
               </h1>
 
               <p className="text-muted-foreground text-lg md:text-xl mb-8 max-w-[560px] leading-relaxed" data-reveal>
-                Trusted by 26+ businesses across Mangalore, Bangalore &amp; Dubai. We build websites that actually bring in customers.
+                Trusted by 50+ businesses across Mangalore, Bangalore &amp; Dubai. We build websites that actually bring in customers.
               </p>
 
               {/* CTAs */}
@@ -578,7 +603,7 @@ export default function Home() {
                   className="btn-pill bg-[#25D366] text-white flex items-center gap-2.5 shadow-[0_8px_24px_-6px_rgba(37,211,102,0.35)] hover:shadow-[0_12px_32px_-4px_rgba(37,211,102,0.45)] text-base"
                   onClick={handleWhatsAppClick}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                  <WhatsAppIcon />
                   Get Free Consultation on WhatsApp
                 </a>
                 <a
@@ -689,7 +714,7 @@ export default function Home() {
                       className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
                       onClick={handleWhatsAppClick}
                     >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                      <WhatsAppIcon />
                       Chat on WhatsApp Now
                     </a>
                   </div>
@@ -704,7 +729,7 @@ export default function Home() {
           <div className="container py-7">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="text-center md:text-left">
-                <div className="text-2xl md:text-4xl font-extrabold text-white font-display">26+</div>
+                <div className="text-2xl md:text-4xl font-extrabold text-white font-display">50+</div>
                 <div className="text-white/60 text-sm uppercase tracking-wider font-semibold">Clients Served</div>
               </div>
               <div className="text-center md:text-left md:border-l md:border-white/15 md:pl-8">
@@ -755,20 +780,14 @@ export default function Home() {
                 data-reveal
               >
                 <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center relative overflow-hidden`}>
-                  {/* Website Thumbnail using screenshot service */}
+                  {/* Website Thumbnail */}
                   <img
-                    src={`https://image.thum.io/get/width/800/crop/600/${item.url}`}
+                    src={item.thumbnail}
                     alt={`${item.type} website preview`}
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
-                    onError={(e) => {
-                      // Fallback: hide image and show gradient
-                      const target = e.currentTarget as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
                   />
-                  {/* Gradient overlay for better text readability */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-30 group-hover:opacity-20 transition-opacity pointer-events-none`} />
+
                   {/* Result badge */}
                   <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 z-10">
                     <TrendingUp className="w-3 h-3" /> {item.result}
@@ -874,7 +893,7 @@ export default function Home() {
               className="btn-pill bg-[#25D366] text-white flex items-center gap-2.5 shadow-lg whitespace-nowrap relative z-10"
               onClick={handleWhatsAppClick}
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+              <WhatsAppIcon />
               Chat With Us on WhatsApp
             </a>
           </div>
@@ -890,7 +909,7 @@ export default function Home() {
               <span className="text-muted-foreground font-display font-semibold tracking-wider text-sm uppercase">Social Proof</span>
               <span className="h-[1px] w-8 bg-border" />
             </div>
-            <h2 data-reveal>Trusted by <span className="text-gradient-orange">26+ Businesses</span></h2>
+            <h2 data-reveal>Trusted by <span className="text-gradient-orange">50+ Businesses</span></h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto" data-reveal>
               From Mangalore to Dubai — businesses trust us to build their digital presence
             </p>
@@ -1018,7 +1037,7 @@ export default function Home() {
                 className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2.5 shadow-[0_8px_24px_-6px_rgba(37,211,102,0.35)] text-base"
                 onClick={handleWhatsAppClick}
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                <WhatsAppIcon />
                 Get Free Consultation on WhatsApp
               </a>
             </div>
@@ -1098,7 +1117,7 @@ export default function Home() {
                     className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
                     onClick={handleWhatsAppClick}
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                    <WhatsAppIcon />
                     Chat on WhatsApp Now
                   </a>
                 </div>
@@ -1129,7 +1148,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2 text-white/80 text-sm">
               <Check className="w-4 h-4 text-[#25D366]" />
-              26+ Clients Served
+              50+ Clients Served
             </div>
             <div className="flex items-center gap-2 text-white/80 text-sm">
               <Check className="w-4 h-4 text-[#25D366]" />
@@ -1226,7 +1245,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 bg-[#25D366] text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-[#20bd5a] transition-colors mt-2"
                   onClick={handleWhatsAppClick}
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                  <WhatsAppIcon className="w-4 h-4" />
                   Chat on WhatsApp
                 </a>
               </div>
@@ -1249,7 +1268,7 @@ export default function Home() {
           className="w-full py-4 bg-[#25D366] text-white rounded-xl font-bold font-display flex items-center justify-center gap-2.5 shadow-[0_-4px_20px_-4px_rgba(37,211,102,0.2)] text-base"
           onClick={handleWhatsAppClick}
         >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+          <WhatsAppIcon />
           WhatsApp Us Now
         </a>
       </div>
