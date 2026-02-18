@@ -915,13 +915,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
             {clients.map((client, i) => (
-              <div key={i} className="group bg-card rounded-xl border border-border px-6 py-8 flex flex-col items-center justify-center text-center hover:border-foreground/20 transition-all duration-300 hover:shadow-md min-h-[120px]" data-reveal>
+              <div key={i} className="group bg-card rounded-xl border border-border px-3 py-6 md:px-6 md:py-8 flex flex-col items-center justify-center text-center hover:border-foreground/20 transition-all duration-300 hover:shadow-md min-h-[120px] overflow-hidden" data-reveal>
                 {client.logo ? (
-                  <img src={client.logo} alt={`${client.name} logo`} className="h-10 md:h-12 w-auto object-contain max-w-[180px] grayscale group-hover:grayscale-0 transition-all" loading="lazy" />
+                  <img src={client.logo} alt={`${client.name} logo`} className="h-8 md:h-12 w-auto object-contain max-w-full grayscale group-hover:grayscale-0 transition-all" loading="lazy" />
                 ) : (
-                  <span className="text-lg md:text-xl font-bold font-display text-foreground/80 tracking-tight leading-tight group-hover:text-foreground transition-colors">{client.name}</span>
+                  <span className="text-base md:text-xl font-bold font-display text-foreground/80 tracking-tight leading-tight group-hover:text-foreground transition-colors">{client.name}</span>
                 )}
                 <span className="flex items-center gap-1 text-muted-foreground text-[11px] mt-3">
                   <MapPin className="w-3 h-3" /> {client.location}
