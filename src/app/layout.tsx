@@ -5,8 +5,8 @@ import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Arovida Technologies | Professional Websites for Interior Designers & Construction Companies | Mangalore, Puttur, Vitla",
-  description: "Arovida Technologies - Get 3X more projects with a professional website. Trusted by 50+ Mangalore businesses. Portfolio showcase, SEO, lead generation. Free consultation. Digital agency in Mangalore, Puttur, Vitla.",
+  title: "Arovida Technologies | Website Design, Brand Design & Marketing | Mangalore, Puttur, Vitla",
+  description: "Arovida Technologies — Website design, brand design & digital marketing that grows your business. Trusted by 50+ businesses across Mangalore, Bangalore & Dubai. Free consultation. Digital agency in Mangalore, Puttur, Vitla.",
   keywords: "arovida, arovida technologies, arovida website agency, arovida tech, arovida mangalore, arovida puttur, arovida vitla, digital agency in mangalore, interior designer website, construction company website mangalore, web development mangalore, website design mangalore, seo mangalore, digital marketing mangalore, branding mangalore, logo design mangalore, e-commerce mangalore, custom software mangalore",
   authors: [{ name: "Arovida Technologies" }],
   creator: "Arovida Technologies",
@@ -23,16 +23,16 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Arovida Technologies | Professional Websites for Interior Designers & Construction Companies",
-    description: "Get 3X more projects with a professional website. Trusted by 50+ businesses across Mangalore, Bangalore & Dubai. Digital agency in Mangalore, Puttur, Vitla.",
+    title: "Arovida Technologies | Website Design, Brand Design & Marketing",
+    description: "Website design, brand design & digital marketing that grows your business. Trusted by 50+ businesses across Mangalore, Bangalore & Dubai. Digital agency in Mangalore, Puttur, Vitla.",
     type: "website",
     locale: "en_IN",
     siteName: "Arovida Technologies",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arovida Technologies | Professional Websites for Interior Designers",
-    description: "Get 3X more projects with a professional website. Trusted by 50+ Mangalore businesses.",
+    title: "Arovida Technologies | Website Design, Brand Design & Marketing",
+    description: "Website design, brand design & digital marketing that grows your business. Trusted by 50+ businesses.",
   },
   alternates: {
     canonical: "https://arovidatechnologies.com",
@@ -51,6 +51,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google tag (gtag.js) - Google Ads */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17960269016"
+          strategy="afterInteractive"
+        />
+        <Script id="google-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17960269016');
+          `}
+        </Script>
         {/* DNS Prefetch and Preconnect for faster font loading */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />

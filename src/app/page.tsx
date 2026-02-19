@@ -571,11 +571,14 @@ export default function Home() {
             <div className="w-full lg:w-7/12">
               {/* Ribbons */}
               <div className="flex items-center -space-x-3 mb-6" data-reveal>
-                <span className="bg-primary text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[-2deg] z-10 shadow-lg">
-                  Interior Designers
+                <span className="bg-primary text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[-2deg] z-20 shadow-lg">
+                  Website Design
                 </span>
-                <span className="bg-primary/80 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[2deg] shadow-lg">
-                  & Construction Companies
+                <span className="bg-primary/85 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[1deg] z-10 shadow-lg">
+                  Brand Design
+                </span>
+                <span className="bg-primary/70 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[3deg] shadow-lg">
+                  & Marketing
                 </span>
               </div>
 
@@ -880,7 +883,7 @@ export default function Home() {
             <div className="relative z-10 max-w-lg">
               <span className="text-white/70 text-sm font-bold tracking-widest uppercase mb-3 block">// Get In Touch</span>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Ready to Grow Your <span className="text-[#25D366]">Interior Business</span> Online?
+                Ready to Grow Your <span className="text-[#25D366]">Business</span> Online?
               </h2>
               <p className="text-white/70 text-sm leading-relaxed">
                 Limited slots available this month. Book your free consultation and let&apos;s build your digital presence.
