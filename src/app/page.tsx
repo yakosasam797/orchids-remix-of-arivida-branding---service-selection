@@ -56,7 +56,9 @@ function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
 function trackConversion(type: string) {
   if (typeof window !== "undefined" && (window as any).gtag) {
     (window as any).gtag("event", "conversion", {
-      send_to: "AW-XXXXX/XXXXX",
+      send_to: "AW-17960269016/Sa45CJ3ljvsbENjpj_RC",
+      value: 1.0,
+      currency: "INR",
       event_category: type,
     });
   }
