@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
-import path from "node:path";
+import { resolve } from "node:path";
 
-const LOADER = path.resolve(__dirname, 'src/visual-edits/component-tagger-loader.js');
+const LOADER = resolve(import.meta.dirname, 'src/visual-edits/component-tagger-loader.js');
 
 const nextConfig: NextConfig = {
   images: {

@@ -91,6 +91,30 @@ const clients = [
 
 const portfolio = [
   {
+    type: "Organic Farms & Retreats",
+    result: "Heritage brand showcase",
+    color: "from-[#2d5a27] to-[#8bc34a]",
+    url: "https://varanasi-modern-website.vercel.app/",
+    thumbnail: "/portfolio/varanashi.png",
+    description: "Six generations of organic farming — Varanashi heritage website",
+  },
+  {
+    type: "Industrial Printing Machinery",
+    result: "Ranked #1 on Google",
+    color: "from-[#ff9c22] to-[#e74c3c]",
+    url: "https://www.premiermachineries.com/",
+    thumbnail: "/portfolio/premier-machineries.png",
+    description: "Industrial level printing machine dealer website - Mangalore",
+  },
+  {
+    type: "Poultry & Agro Industry",
+    result: "Corporate digital presence",
+    color: "from-[#1a237e] to-[#42a5f5]",
+    url: "https://bharathagrovet.vercel.app/",
+    thumbnail: "/portfolio/bharath-agrovet.png",
+    description: "Leading poultry producer in coastal Karnataka — Bharath Agrovet",
+  },
+  {
     type: "Interior Design Firm",
     result: "50% increase in inquiries",
     color: "from-[#7d41ff] to-[#3b82f6]",
@@ -107,36 +131,12 @@ const portfolio = [
     description: "Modern architecture and consulting firm website",
   },
   {
-    type: "Industrial Printing Machinery",
-    result: "Ranked #1 on Google",
-    color: "from-[#ff9c22] to-[#e74c3c]",
-    url: "https://www.premiermachineries.com/",
-    thumbnail: "/portfolio/premier-machineries.png",
-    description: "Industrial level printing machine dealer website - Mangalore",
-  },
-  {
     type: "Immigration Services",
     result: "Modern portfolio showcase",
     color: "from-[#3b82f6] to-[#7d41ff]",
     url: "https://www.xiphiasimmigration.com/",
     thumbnail: "/portfolio/xiphias-immigration.png",
     description: "Professional immigration consultancy website - Dubai",
-  },
-  {
-    type: "Organic Farms & Retreats",
-    result: "Heritage brand showcase",
-    color: "from-[#2d5a27] to-[#8bc34a]",
-    url: "https://varanasi-modern-website.vercel.app/",
-    thumbnail: "/portfolio/varanashi.png",
-    description: "Six generations of organic farming — Varanashi heritage website",
-  },
-  {
-    type: "Poultry & Agro Industry",
-    result: "Corporate digital presence",
-    color: "from-[#1a237e] to-[#42a5f5]",
-    url: "https://bharathagrovet.vercel.app/",
-    thumbnail: "/portfolio/bharath-agrovet.png",
-    description: "Leading poultry producer in coastal Karnataka — Bharath Agrovet",
   },
 ];
 
@@ -877,7 +877,7 @@ export default function Home() {
           <div className="relative overflow-hidden rounded-[20px] bg-[#0C1A78] px-8 py-10 md:px-14 md:py-14 flex flex-col md:flex-row items-center justify-between gap-8" data-reveal>
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_right,_rgba(125,65,255,0.15),transparent)] pointer-events-none" />
             <div className="relative z-10 max-w-lg">
-              <span className="text-white/70 text-sm font-bold tracking-widest uppercase mb-3 block">// Get In Touch</span>
+              <span className="text-white/70 text-sm font-bold tracking-widest uppercase mb-3 block">{"// Get In Touch"}</span>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Ready to Grow Your <span className="text-[#25D366]">Business</span> Online?
               </h2>

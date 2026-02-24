@@ -11,7 +11,7 @@ type ReporterProps = {
 export default function ErrorReporter({ error, reset }: ReporterProps) {
   /* ─ instrumentation shared by every route ─ */
   const lastOverlayMsg = useRef("");
-  const pollRef = useRef<NodeJS.Timeout | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const inIframe = window.parent !== window;
@@ -97,6 +97,7 @@ export default function ErrorReporter({ error, reset }: ReporterProps) {
   /* ─ global-error UI ─ */
   return (
     <html>
+      <head />
       <body className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
         <div className="max-w-md w-full text-center space-y-6">
           <div className="space-y-2">
