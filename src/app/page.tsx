@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   ArrowUpRight,
   Phone,
@@ -499,7 +500,7 @@ export default function Home() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.08)]" : "bg-transparent"}`}>
         <div className="container flex items-center justify-between h-[72px]">
           <a href="#" className="flex items-center">
-            <img src="/arovida-dark.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 md:h-14 w-auto object-contain" loading="eager" width="120" height="56" />
+            <Image src="/arovida-dark.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 md:h-14 w-auto object-contain" width={120} height={56} priority />
           </a>
 
           {/* Desktop links */}
@@ -888,10 +889,13 @@ export default function Home() {
               >
                 <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center relative overflow-hidden`}>
                   {/* Website Thumbnail */}
-                  <img
+                  <Image
                     src={item.thumbnail}
                     alt={`${item.type} website preview`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    width={600}
+                    height={400}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     loading="lazy"
                   />
 
@@ -1026,7 +1030,7 @@ export default function Home() {
             {clients.map((client, i) => (
               <div key={i} className="group bg-card rounded-xl border border-border px-3 py-6 md:px-6 md:py-8 flex flex-col items-center justify-center text-center hover:border-foreground/20 transition-all duration-300 hover:shadow-md min-h-[120px] overflow-hidden" data-reveal>
                 {client.logo ? (
-                  <img src={client.logo} alt={`${client.name} logo`} className="h-8 md:h-12 w-auto object-contain max-w-full grayscale group-hover:grayscale-0 transition-all" loading="lazy" />
+                  <Image src={client.logo} alt={`${client.name} logo`} className="h-8 md:h-12 w-auto object-contain max-w-full grayscale group-hover:grayscale-0 transition-all" width={128} height={48} loading="lazy" />
                 ) : (
                   <span className="text-base md:text-xl font-bold font-display text-foreground/80 tracking-tight leading-tight group-hover:text-foreground transition-colors">{client.name}</span>
                 )}
@@ -1269,7 +1273,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             <div className="md:col-span-1">
-              <img src="/arovida-white.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 w-auto mb-5 object-contain" loading="lazy" width="120" height="56" />
+              <Image src="/arovida-white.png" alt="Arovida Technologies - Digital Agency in Mangalore" className="h-12 w-auto mb-5 object-contain" width={120} height={56} loading="lazy" />
               <p className="text-white/60 text-sm mb-6 leading-relaxed">Professional websites for interior designers &amp; construction companies. Built to get you more projects.</p>
               <div className="flex items-center gap-3">
                 {[
