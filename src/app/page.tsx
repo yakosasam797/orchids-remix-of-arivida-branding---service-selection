@@ -261,6 +261,8 @@ function validatePhoneNumber(phone: string): { valid: boolean; error?: string } 
 
 export default function Home() {
   const [heroFormSubmitted, setHeroFormSubmitted] = useState(false);
+  const [heroFormStep, setHeroFormStep] = useState<1 | 2>(1);
+  const [heroStep1Data, setHeroStep1Data] = useState<{ name: string; phone: string }>({ name: "", phone: "" });
   const [footerFormSubmitted, setFooterFormSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -565,19 +567,6 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             {/* Left: Content */}
             <div className="w-full lg:w-7/12">
-              {/* Ribbons */}
-              <div className="flex items-center -space-x-3 mb-6" data-reveal>
-                <span className="bg-primary text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[-2deg] z-20 shadow-lg">
-                  Website Design
-                </span>
-                <span className="bg-primary/85 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[1deg] z-10 shadow-lg">
-                  Brand Design
-                </span>
-                <span className="bg-primary/70 text-white px-5 py-1.5 rounded-full font-display font-semibold text-sm rotate-[3deg] shadow-lg">
-                  & Marketing
-                </span>
-              </div>
-
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-muted border border-border px-4 py-2 rounded-full text-sm mb-6" data-reveal>
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -585,34 +574,13 @@ export default function Home() {
               </div>
 
               <h1 className="mb-6" data-reveal>
-                Get <span className="text-gradient-orange">3X More Projects</span> with a Professional{" "}
-                <span className="text-gradient-orange">Website</span>
+                Join 50+ Mangalore Businesses{" "}
+                <span className="text-gradient-orange">Getting 3X More Leads</span>
               </h1>
 
               <p className="text-muted-foreground text-lg md:text-xl mb-8 max-w-[560px] leading-relaxed" data-reveal>
-                Trusted by 50+ businesses across Mangalore, Bangalore &amp; Dubai. We build websites that actually bring in customers.
+                Professional websites that turn visitors into customers in 30 days.
               </p>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-4 mb-8" data-reveal>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-pill bg-[#25D366] text-white flex items-center gap-2.5 shadow-[0_8px_24px_-6px_rgba(37,211,102,0.35)] hover:shadow-[0_12px_32px_-4px_rgba(37,211,102,0.45)] text-base"
-                  onClick={handleWhatsAppClick}
-                >
-                  <WhatsAppIcon />
-                  Get Free Consultation on WhatsApp
-                </a>
-                <a
-                  href="#portfolio"
-                  className="btn-pill bg-primary text-white flex items-center gap-2 hover:bg-primary/90"
-                >
-                  View Our Work
-                  <ArrowUpRight size={16} />
-                </a>
-              </div>
 
               {/* Trust badges row */}
               <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border" data-reveal>
@@ -631,91 +599,218 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: Lead Form */}
+            {/* Right: Optimized 2-Step Lead Form */}
             <div className="w-full lg:w-5/12" data-reveal>
               <div className="glass-card p-8 rounded-[24px] relative">
-                {!heroFormSubmitted ? (
+                {heroFormStep === 1 && !heroFormSubmitted && (
                   <>
-                    <h3 className="text-xl font-bold font-display mb-1">Get Your Free Consultation</h3>
-                    <p className="text-muted-foreground text-sm mb-6">Fill in your details and we&apos;ll get back to you</p>
-                    <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "hero", "hero_form")}>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
-                        <div>
-                          <input
-                            type="tel"
-                            name="phone"
-                            placeholder="Phone (10 digits)"
-                            required
-                            maxLength={10}
-                            pattern="[6-9][0-9]{9}"
-                            className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${phoneError.hero ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'
-                              }`}
-                            onChange={(e) => {
-                              // Only allow digits
-                              const value = e.target.value.replace(/\D/g, '').slice(0, 10);
-                              e.target.value = value;
-                              // Clear error when user starts typing
-                              if (phoneError.hero) {
-                                setPhoneError({ hero: undefined });
-                              }
-                            }}
-                          />
-                          {phoneError.hero && (
-                            <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
-                              <span>⚠</span> {phoneError.hero}
-                            </p>
-                          )}
-                          {!phoneError.hero && (
-                            <p className="text-muted-foreground text-xs mt-1">10-digit mobile number</p>
-                          )}
-                        </div>
+                    <h3 className="text-xl font-bold font-display mb-1">Get Your Free Website Audit 🎁</h3>
+                    <p className="text-muted-foreground text-sm mb-6">See how your site can attract more customers</p>
+                    <form className="space-y-4" onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.currentTarget;
+                      const name = (form.querySelector('input[name="name"]') as HTMLInputElement)?.value || "";
+                      const phone = (form.querySelector('input[name="phone"]') as HTMLInputElement)?.value || "";
+
+                      // Validate phone
+                      const phoneValidation = validatePhoneNumber(phone);
+                      if (!phoneValidation.valid) {
+                        setPhoneError((prev) => ({ ...prev, hero: phoneValidation.error }));
+                        const phoneInput = form.querySelector('input[name="phone"]') as HTMLInputElement;
+                        if (phoneInput) {
+                          phoneInput.focus();
+                          phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        return;
+                      }
+                      setPhoneError((prev) => ({ ...prev, hero: undefined }));
+                      setHeroStep1Data({ name, phone });
+                      setHeroFormStep(2);
+                    }}>
+                      <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                      <div>
+                        <input
+                          type="tel"
+                          name="phone"
+                          placeholder="Phone (10 digits)"
+                          required
+                          maxLength={10}
+                          pattern="[6-9][0-9]{9}"
+                          className={`w-full bg-muted border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 transition-all text-sm ${phoneError.hero ? 'border-red-500 focus:ring-red-500' : 'border-border focus:ring-primary'}`}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                            e.target.value = value;
+                            if (phoneError.hero) {
+                              setPhoneError({ hero: undefined });
+                            }
+                          }}
+                        />
+                        {phoneError.hero && (
+                          <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                            <span>⚠</span> {phoneError.hero}
+                          </p>
+                        )}
+                        {!phoneError.hero && (
+                          <p className="text-muted-foreground text-xs mt-1">10-digit mobile number</p>
+                        )}
+                      </div>
+                      <button type="submit" className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base">
+                        Get My Free Audit Now
+                        <ArrowUpRight size={18} />
+                      </button>
+                    </form>
+                    {/* Trust signals */}
+                    <div className="flex flex-col gap-1.5 mt-5">
+                      <div className="flex items-center gap-2 text-muted-foreground text-xs">
+                        <Check className="w-3.5 h-3.5 text-green-500" />
+                        Response in 30 mins
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground text-xs">
+                        <Check className="w-3.5 h-3.5 text-green-500" />
+                        No credit card needed
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground text-xs">
+                        <Check className="w-3.5 h-3.5 text-green-500" />
+                        See how your site can improve
+                      </div>
+                    </div>
+                    {/* Secondary CTA - subtle text link */}
+                    <p className="text-center text-muted-foreground text-xs mt-5">
+                      Prefer to talk?{" "}
+                      <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-primary hover:underline font-medium">
+                        Call {CONTACT_DISPLAY_1}
+                      </a>
+                    </p>
+                  </>
+                )}
+
+                {heroFormStep === 2 && !heroFormSubmitted && (
+                  <>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Check className="w-5 h-5 text-green-600" />
                       </div>
                       <div>
-                        <select name="businessType" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                        <h3 className="text-lg font-bold font-display">Thanks, {heroStep1Data.name}!</h3>
+                        <p className="text-muted-foreground text-sm">2 quick questions to personalize your audit:</p>
+                      </div>
+                    </div>
+                    <form className="space-y-4 mt-5" onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.currentTarget;
+                      const businessType = (form.querySelector('select[name="businessType"]') as HTMLSelectElement)?.value || "";
+                      const mainGoal = (form.querySelector('select[name="mainGoal"]') as HTMLSelectElement)?.value || "";
+                      setIsSubmitting(true);
+                      setFormError((prev) => ({ ...prev, hero: undefined }));
+                      trackConversion("hero_form");
+
+                      fetch("/api/contact", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          name: heroStep1Data.name,
+                          phone: heroStep1Data.phone,
+                          businessType,
+                          service: mainGoal,
+                          message: `Main Goal: ${mainGoal}`,
+                          formType: "Hero Form (2-Step)",
+                        }),
+                      })
+                        .then(async (response) => {
+                          const data = await response.json().catch(() => null);
+                          if (response.ok && data?.success) {
+                            setHeroFormSubmitted(true);
+                            setFormError((prev) => ({ ...prev, hero: undefined }));
+                          } else {
+                            const baseError = data?.message || data?.error || "Something went wrong. Please try again.";
+                            // Try Web3Forms fallback
+                            if (WEB3FORMS_ACCESS_KEY) {
+                              try {
+                                const web3Response = await fetch("https://api.web3forms.com/submit", {
+                                  method: "POST",
+                                  headers: { "Content-Type": "application/json", Accept: "application/json" },
+                                  body: JSON.stringify({
+                                    access_key: WEB3FORMS_ACCESS_KEY,
+                                    subject: "New Website Audit Request - Hero Form",
+                                    name: heroStep1Data.name,
+                                    phone: heroStep1Data.phone,
+                                    businessType,
+                                    mainGoal,
+                                    formType: "Hero Form (2-Step)",
+                                  }),
+                                });
+                                const web3Data = await web3Response.json().catch(() => null);
+                                if (web3Response.ok && web3Data?.success) {
+                                  setHeroFormSubmitted(true);
+                                  setFormError((prev) => ({ ...prev, hero: undefined }));
+                                  return;
+                                }
+                              } catch (web3Error) {
+                                console.error("Web3Forms fallback error:", web3Error);
+                              }
+                            }
+                            setFormError((prev) => ({ ...prev, hero: baseError }));
+                          }
+                        })
+                        .catch(() => {
+                          setFormError((prev) => ({ ...prev, hero: "Network error. Please check your connection and try again." }));
+                        })
+                        .finally(() => setIsSubmitting(false));
+                    }}>
+                      <div>
+                        <label className="text-sm font-medium text-foreground mb-1.5 block">Your business type</label>
+                        <select name="businessType" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
                           <option value="">Select your business type</option>
                           <option>Interior Designer</option>
                           <option>Construction Company</option>
                           <option>Architecture Firm</option>
                           <option>Real Estate</option>
+                          <option>E-Commerce / Retail</option>
                           <option>Other</option>
                         </select>
                       </div>
                       <div>
-                        <select name="service" className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                          <option value="">What service do you need?</option>
-                          {SERVICE_OPTIONS.map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
+                        <label className="text-sm font-medium text-foreground mb-1.5 block">Your main goal</label>
+                        <select name="mainGoal" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
+                          <option value="">What&apos;s your #1 goal?</option>
+                          <option>Get more leads / inquiries</option>
+                          <option>Build brand credibility</option>
+                          <option>Rank higher on Google</option>
+                          <option>Showcase my portfolio</option>
+                          <option>Launch an online store</option>
+                          <option>Other</option>
                         </select>
                       </div>
                       <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                        {isSubmitting ? "Submitting..." : "Get Free Quote"}
+                        {isSubmitting ? "Submitting..." : "Get My Personalized Audit"}
                         <ArrowUpRight size={18} />
                       </button>
                       {formError.hero && (
                         <p className="text-red-500 text-xs mt-2 text-center">{formError.hero}</p>
                       )}
                     </form>
-                    <p className="text-center text-muted-foreground text-xs mt-4">We&apos;ll respond within 30 minutes</p>
+                    <button
+                      onClick={() => setHeroFormStep(1)}
+                      className="text-muted-foreground text-xs mt-4 hover:text-foreground transition-colors block mx-auto"
+                    >
+                      ← Go back
+                    </button>
                   </>
-                ) : (
+                )}
+
+                {heroFormSubmitted && (
                   <div className="text-center py-8">
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Check className="w-8 h-8 text-green-600" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2">Thanks! We&apos;ll contact you within 30 minutes</h3>
-                    <p className="text-muted-foreground text-sm mb-6">Or chat with us right now on WhatsApp for a faster response</p>
-                    <a
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-pill bg-[#25D366] text-white inline-flex items-center gap-2 shadow-lg"
-                      onClick={handleWhatsAppClick}
-                    >
-                      <WhatsAppIcon />
-                      Chat on WhatsApp Now
-                    </a>
+                    <h3 className="text-xl font-bold mb-2">Your audit is on the way! 🎉</h3>
+                    <p className="text-muted-foreground text-sm mb-4">We&apos;ll contact you within 30 minutes with personalized insights.</p>
+                    <p className="text-muted-foreground text-xs">
+                      Prefer to talk now?{" "}
+                      <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-primary hover:underline font-medium">
+                        Call {CONTACT_DISPLAY_1}
+                      </a>
+                    </p>
                   </div>
                 )}
               </div>
