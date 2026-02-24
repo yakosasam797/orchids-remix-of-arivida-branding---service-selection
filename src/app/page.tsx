@@ -269,12 +269,25 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneError, setPhoneError] = useState<{ hero?: string; footer?: string }>({});
   const [formError, setFormError] = useState<{ hero?: string; footer?: string }>({});
+  const [heroFormVisible, setHeroFormVisible] = useState(false);
   useReveal();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Track hero form visibility to hide floating CTA when form is on screen
+  useEffect(() => {
+    const formEl = document.getElementById('hero-form');
+    if (!formEl) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroFormVisible(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    observer.observe(formEl);
+    return () => observer.disconnect();
   }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: "hero" | "footer", conversionType: string = "form_submit") => {
@@ -1353,20 +1366,22 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* ===== FLOATING CTA (Mobile) ===== */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur-md border-t border-border lg:hidden">
-        <a
-          href="#hero-form"
-          className="w-full py-4 bg-primary text-white rounded-xl font-bold font-display flex items-center justify-center gap-2.5 shadow-[0_-4px_20px_-4px_rgba(12,26,120,0.25)] text-base"
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }}
-        >
-          Get My Free Audit Now
-          <ArrowUpRight size={18} />
-        </a>
-      </div>
+      {/* ===== FLOATING CTA (Mobile) — hides when form is visible ===== */}
+      {!heroFormVisible && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur-md border-t border-border lg:hidden transition-all duration-300">
+          <a
+            href="#hero-form"
+            className="w-full py-4 bg-primary text-white rounded-xl font-bold font-display flex items-center justify-center gap-2.5 shadow-[0_-4px_20px_-4px_rgba(12,26,120,0.25)] text-base"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
+          >
+            Get My Free Audit Now
+            <ArrowUpRight size={18} />
+          </a>
+        </div>
+      )}
     </>
   );
 }
