@@ -601,7 +601,7 @@ export default function Home() {
 
             {/* Right: Optimized 2-Step Lead Form */}
             <div className="w-full lg:w-5/12" data-reveal>
-              <div className="glass-card p-8 rounded-[24px] relative">
+              <div id="hero-form" className="glass-card p-8 rounded-[24px] relative">
                 {heroFormStep === 1 && !heroFormSubmitted && (
                   <>
                     <h3 className="text-xl font-bold font-display mb-1">Get Your Free Website Audit 🎁</h3>
@@ -1353,17 +1353,18 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* ===== FLOATING WHATSAPP (Mobile) ===== */}
+      {/* ===== FLOATING CTA (Mobile) ===== */}
       <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/90 backdrop-blur-md border-t border-border lg:hidden">
         <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-4 bg-[#25D366] text-white rounded-xl font-bold font-display flex items-center justify-center gap-2.5 shadow-[0_-4px_20px_-4px_rgba(37,211,102,0.2)] text-base"
-          onClick={handleWhatsAppClick}
+          href="#hero-form"
+          className="w-full py-4 bg-primary text-white rounded-xl font-bold font-display flex items-center justify-center gap-2.5 shadow-[0_-4px_20px_-4px_rgba(12,26,120,0.25)] text-base"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
         >
-          <WhatsAppIcon />
-          WhatsApp Us Now
+          Get My Free Audit Now
+          <ArrowUpRight size={18} />
         </a>
       </div>
     </>
