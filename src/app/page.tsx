@@ -262,8 +262,6 @@ function validatePhoneNumber(phone: string): { valid: boolean; error?: string } 
 
 export default function Home() {
   const [heroFormSubmitted, setHeroFormSubmitted] = useState(false);
-  const [heroFormStep, setHeroFormStep] = useState<1 | 2>(1);
-  const [heroStep1Data, setHeroStep1Data] = useState<{ name: string; phone: string }>({ name: "", phone: "" });
   const [footerFormSubmitted, setFooterFormSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -613,10 +611,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: Optimized 2-Step Lead Form */}
+            {/* Right: Single-Step Lead Form */}
             <div className="w-full lg:w-5/12" data-reveal>
               <div id="hero-form" className="glass-card p-8 rounded-[24px] relative">
-                {heroFormStep === 1 && !heroFormSubmitted && (
+                {!heroFormSubmitted && (
                   <>
                     <h3 className="text-xl font-bold font-display mb-1">Get Your Free Website Audit 🎁</h3>
                     <p className="text-muted-foreground text-sm mb-6">See how your site can attract more customers</p>
@@ -625,6 +623,7 @@ export default function Home() {
                       const form = e.currentTarget;
                       const name = (form.querySelector('input[name="name"]') as HTMLInputElement)?.value || "";
                       const phone = (form.querySelector('input[name="phone"]') as HTMLInputElement)?.value || "";
+                      const businessName = (form.querySelector('input[name="businessName"]') as HTMLInputElement)?.value || "";
 
                       // Validate phone
                       const phoneValidation = validatePhoneNumber(phone);
@@ -638,8 +637,61 @@ export default function Home() {
                         return;
                       }
                       setPhoneError((prev) => ({ ...prev, hero: undefined }));
-                      setHeroStep1Data({ name, phone });
-                      setHeroFormStep(2);
+                      setFormError((prev) => ({ ...prev, hero: undefined }));
+                      setIsSubmitting(true);
+                      trackConversion("hero_form");
+
+                      fetch("/api/contact", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          name,
+                          phone,
+                          businessType: businessName,
+                          service: "",
+                          message: `Business: ${businessName}`,
+                          formType: "Hero Form",
+                        }),
+                      })
+                        .then(async (response) => {
+                          const data = await response.json().catch(() => null);
+                          if (response.ok && data?.success) {
+                            setHeroFormSubmitted(true);
+                            setFormError((prev) => ({ ...prev, hero: undefined }));
+                          } else {
+                            const baseError = data?.message || data?.error || "Something went wrong. Please try again.";
+                            // Try Web3Forms fallback
+                            if (WEB3FORMS_ACCESS_KEY) {
+                              try {
+                                const web3Response = await fetch("https://api.web3forms.com/submit", {
+                                  method: "POST",
+                                  headers: { "Content-Type": "application/json", Accept: "application/json" },
+                                  body: JSON.stringify({
+                                    access_key: WEB3FORMS_ACCESS_KEY,
+                                    subject: "New Website Audit Request - Hero Form",
+                                    name,
+                                    phone,
+                                    businessName,
+                                    formType: "Hero Form",
+                                  }),
+                                });
+                                const web3Data = await web3Response.json().catch(() => null);
+                                if (web3Response.ok && web3Data?.success) {
+                                  setHeroFormSubmitted(true);
+                                  setFormError((prev) => ({ ...prev, hero: undefined }));
+                                  return;
+                                }
+                              } catch (web3Error) {
+                                console.error("Web3Forms fallback error:", web3Error);
+                              }
+                            }
+                            setFormError((prev) => ({ ...prev, hero: baseError }));
+                          }
+                        })
+                        .catch(() => {
+                          setFormError((prev) => ({ ...prev, hero: "Network error. Please check your connection and try again." }));
+                        })
+                        .finally(() => setIsSubmitting(false));
                     }}>
                       <input type="text" name="name" placeholder="Your Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
                       <div>
@@ -668,10 +720,14 @@ export default function Home() {
                           <p className="text-muted-foreground text-xs mt-1">10-digit mobile number</p>
                         )}
                       </div>
-                      <button type="submit" className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base">
-                        Get My Free Audit Now
+                      <input type="text" name="businessName" placeholder="Your Business Name" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm" />
+                      <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
+                        {isSubmitting ? "Submitting..." : "Get My Free Audit Now"}
                         <ArrowUpRight size={18} />
                       </button>
+                      {formError.hero && (
+                        <p className="text-red-500 text-xs mt-2 text-center">{formError.hero}</p>
+                      )}
                     </form>
                     {/* Trust signals */}
                     <div className="flex flex-col gap-1.5 mt-5">
@@ -688,127 +744,25 @@ export default function Home() {
                         See how your site can improve
                       </div>
                     </div>
-                    {/* Secondary CTA - subtle text link */}
-                    <p className="text-center text-muted-foreground text-xs mt-5">
-                      Prefer to talk?{" "}
-                      <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-primary hover:underline font-medium">
-                        Call {CONTACT_DISPLAY_1}
+                    {/* Secondary CTA with WhatsApp icon */}
+                    <div className="flex items-center justify-center gap-3 mt-5">
+                      <p className="text-muted-foreground text-xs">
+                        Prefer to talk?{" "}
+                        <a href={`tel:${CONTACT_DISPLAY_1.replace(/\s/g, "")}`} className="text-primary hover:underline font-medium">
+                          Call {CONTACT_DISPLAY_1}
+                        </a>
+                      </p>
+                      <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-9 h-9 bg-[#25D366] rounded-full text-white hover:bg-[#20bd5a] transition-all hover:scale-110 shadow-md"
+                        aria-label="Chat on WhatsApp"
+                        onClick={handleWhatsAppClick}
+                      >
+                        <WhatsAppIcon className="w-[18px] h-[18px]" />
                       </a>
-                    </p>
-                  </>
-                )}
-
-                {heroFormStep === 2 && !heroFormSubmitted && (
-                  <>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Check className="w-5 h-5 text-green-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold font-display">Thanks, {heroStep1Data.name}!</h3>
-                        <p className="text-muted-foreground text-sm">2 quick questions to personalize your audit:</p>
-                      </div>
                     </div>
-                    <form className="space-y-4 mt-5" onSubmit={(e) => {
-                      e.preventDefault();
-                      const form = e.currentTarget;
-                      const businessType = (form.querySelector('select[name="businessType"]') as HTMLSelectElement)?.value || "";
-                      const mainGoal = (form.querySelector('select[name="mainGoal"]') as HTMLSelectElement)?.value || "";
-                      setIsSubmitting(true);
-                      setFormError((prev) => ({ ...prev, hero: undefined }));
-                      trackConversion("hero_form");
-
-                      fetch("/api/contact", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          name: heroStep1Data.name,
-                          phone: heroStep1Data.phone,
-                          businessType,
-                          service: mainGoal,
-                          message: `Main Goal: ${mainGoal}`,
-                          formType: "Hero Form (2-Step)",
-                        }),
-                      })
-                        .then(async (response) => {
-                          const data = await response.json().catch(() => null);
-                          if (response.ok && data?.success) {
-                            setHeroFormSubmitted(true);
-                            setFormError((prev) => ({ ...prev, hero: undefined }));
-                          } else {
-                            const baseError = data?.message || data?.error || "Something went wrong. Please try again.";
-                            // Try Web3Forms fallback
-                            if (WEB3FORMS_ACCESS_KEY) {
-                              try {
-                                const web3Response = await fetch("https://api.web3forms.com/submit", {
-                                  method: "POST",
-                                  headers: { "Content-Type": "application/json", Accept: "application/json" },
-                                  body: JSON.stringify({
-                                    access_key: WEB3FORMS_ACCESS_KEY,
-                                    subject: "New Website Audit Request - Hero Form",
-                                    name: heroStep1Data.name,
-                                    phone: heroStep1Data.phone,
-                                    businessType,
-                                    mainGoal,
-                                    formType: "Hero Form (2-Step)",
-                                  }),
-                                });
-                                const web3Data = await web3Response.json().catch(() => null);
-                                if (web3Response.ok && web3Data?.success) {
-                                  setHeroFormSubmitted(true);
-                                  setFormError((prev) => ({ ...prev, hero: undefined }));
-                                  return;
-                                }
-                              } catch (web3Error) {
-                                console.error("Web3Forms fallback error:", web3Error);
-                              }
-                            }
-                            setFormError((prev) => ({ ...prev, hero: baseError }));
-                          }
-                        })
-                        .catch(() => {
-                          setFormError((prev) => ({ ...prev, hero: "Network error. Please check your connection and try again." }));
-                        })
-                        .finally(() => setIsSubmitting(false));
-                    }}>
-                      <div>
-                        <label className="text-sm font-medium text-foreground mb-1.5 block">Your business type</label>
-                        <select name="businessType" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                          <option value="">Select your business type</option>
-                          <option>Interior Designer</option>
-                          <option>Construction Company</option>
-                          <option>Architecture Firm</option>
-                          <option>Real Estate</option>
-                          <option>E-Commerce / Retail</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-foreground mb-1.5 block">Your main goal</label>
-                        <select name="mainGoal" required className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-sm">
-                          <option value="">What&apos;s your #1 goal?</option>
-                          <option>Get more leads / inquiries</option>
-                          <option>Build brand credibility</option>
-                          <option>Rank higher on Google</option>
-                          <option>Showcase my portfolio</option>
-                          <option>Launch an online store</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-                      <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white py-3.5 rounded-lg font-bold font-display flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                        {isSubmitting ? "Submitting..." : "Get My Personalized Audit"}
-                        <ArrowUpRight size={18} />
-                      </button>
-                      {formError.hero && (
-                        <p className="text-red-500 text-xs mt-2 text-center">{formError.hero}</p>
-                      )}
-                    </form>
-                    <button
-                      onClick={() => setHeroFormStep(1)}
-                      className="text-muted-foreground text-xs mt-4 hover:text-foreground transition-colors block mx-auto"
-                    >
-                      ← Go back
-                    </button>
                   </>
                 )}
 
